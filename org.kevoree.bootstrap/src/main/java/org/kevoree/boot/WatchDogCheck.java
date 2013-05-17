@@ -24,6 +24,13 @@ public class WatchDogCheck implements Runnable {
     }
 
     private File runtimeFile = null;
+
+    public void setModelFile(File modelFile) {
+        this.modelFile = modelFile;
+    }
+
+    private File modelFile = null;
+
     private AtomicLong lastCheck = new AtomicLong();
     private static ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
     private Process currentProcess = null;
@@ -32,7 +39,7 @@ public class WatchDogCheck implements Runnable {
     public void run() {
         Long dif = System.currentTimeMillis() - lastCheck.get();
         if (dif > checkTime) {
-            System.err.println("Kevoree Runtime does not send news since "+checkTime+" force restart");
+            System.err.println("Kevoree Runtime does not send news since " + checkTime + " force restart");
             currentProcess.destroy();
             startKevoreeProcess();
         }
@@ -52,6 +59,9 @@ public class WatchDogCheck implements Runnable {
         ArrayList<String> childargs = new ArrayList<String>();
         ArrayList<String> childmainargs = new ArrayList<String>();
         childargs.add("-Dkevruntime=" + runtimeFile.getAbsolutePath());
+        if (modelFile != null) {
+            childargs.add("-Dnode.bootstrap=" + modelFile.getAbsolutePath());
+        }
         currentProcess = new ChildJVM.Builder()
                 .withMainClassName("org.kevoree.boot.child.watchdog.ChildRunner")
                 .withAdditionalCommandLineArguments(childargs)
@@ -67,7 +77,6 @@ public class WatchDogCheck implements Runnable {
             try {
                 serverSocket = new DatagramSocket(internalPort);
                 byte[] receiveData = new byte[1024];
-                byte[] sendData = new byte[1024];
                 while (true) {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                     serverSocket.receive(receivePacket);

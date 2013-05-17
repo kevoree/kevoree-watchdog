@@ -24,7 +24,7 @@ public class Runner {
         Runtime.getRuntime().addShutdownHook(new Thread(childManager));
         System.out.println("Kevoree Boot Service");
         if (args.length != 2 && args.length != 1) {
-            System.out.println("Usage : [kevoree.version] [bootmodel]");
+            System.out.println("Usage : [kevoree.version] ([bootmodel])");
             System.exit(-1);
         }
         String kevoreeVersion = args[0].toString();
@@ -39,6 +39,15 @@ public class Runner {
         }
         File runtime = downloader.get(cleanRuntimeURL, kevoreeVersion);
         checker.setRuntimeFile(runtime);
+
+        //look for bootmodel
+        if (args.length == 2) {
+            String modelPath = args[1];
+            File modelFile = new File(modelPath);
+            if (modelFile.exists()) {
+                checker.setModelFile(modelFile);
+            }
+        }
 
         System.out.println("Kevoree " + kevoreeVersion + " Ready to run ");
         checker.startServer();
