@@ -1,2 +1,2 @@
 KEVOREE_VERSION=2.0.0-SNAPSHOT
-NODE_NAME=node0
+NODE_NAME=$(hostname)_$(id -un)
