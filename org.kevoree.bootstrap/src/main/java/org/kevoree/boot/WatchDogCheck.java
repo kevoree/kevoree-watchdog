@@ -62,6 +62,9 @@ public class WatchDogCheck implements Runnable {
         if (modelFile != null) {
             childargs.add("-Dnode.bootstrap=" + modelFile.getAbsolutePath());
         }
+        if(System.getProperty("node.name")!=null && System.getProperty("node.name") != ""){
+            childargs.add("-Dnode.name=" + System.getProperty("node.name"));
+        }
         currentProcess = new ChildJVM.Builder()
                 .withMainClassName("org.kevoree.boot.child.watchdog.ChildRunner")
                 .withAdditionalCommandLineArguments(childargs)
