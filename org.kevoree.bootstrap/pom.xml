@@ -84,6 +84,16 @@
                                         <group>loader</group>
                                     </mapper>
                                 </data>
+                                <data>
+                                    <src>${basedir}/src/deb/etc/kevoree</src>
+                                    <type>directory</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/etc/kevoree</prefix>
+                                        <user>loader</user>
+                                        <group>loader</group>
+                                    </mapper>
+                                </data>
 
                                 <data>
                                     <type>template</type>
