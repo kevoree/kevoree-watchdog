@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.kevoree.bootstrap</artifactId>
+    <artifactId>org.kevoree.bootstrap.service</artifactId>
     <packaging>jar</packaging>
     <name>kevoree.bootstrap</name>
     <groupId>org.kevoree.bootstrap</groupId>
@@ -88,10 +88,10 @@
                                 <data>
                                     <type>template</type>
                                     <paths>
-                                        <path>etc/${project.artifactId}</path>
-                                        <path>var/lib/${project.artifactId}</path>
-                                        <path>var/log/${project.artifactId}</path>
-                                        <path>var/run/${project.artifactId}</path>
+                                        <path>etc/kevoree</path>
+                                        <path>var/lib/kevoree</path>
+                                        <path>var/log/kevoree</path>
+                                        <path>var/run/kevoree</path>
                                     </paths>
                                     <mapper>
                                         <type>perm</type>
