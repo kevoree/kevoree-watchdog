@@ -16,7 +16,7 @@ The Kevoree bootstrap service aims at deploying, installing, starting and monito
 Simply donwload the last .deb version of kevoree bootstraper 
 
 	wget https://oss.sonatype.org/content/repositories/snapshots/org/kevoree/bootstrap/org.kevoree.bootstrap.service/1.0-SNAPSHOT/org.kevoree.bootstrap.service-1.0-20130517.232717-2.deb
-	sudo dpkg -i org.kevoree.bootstrap.service-1.0-20130517.232717-2.deb
+	sudo dpkg -i sudo dpkg -i org.kevoree.bootstrap*.deb
 	
 ### Configuration is located in /etc/kevoree/config file
 
@@ -29,6 +29,10 @@ Change the KEVOREE_VERSION to the right version
 ### Start Kevoree service 
 
 	sudo service kevoree start
+	
+### Monitor the log file 
+
+	tail -f -n 200 /var/log/kevoree/out
 
 ### Get status (PID) of current Kevoree Runtime
 
