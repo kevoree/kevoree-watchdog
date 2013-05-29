@@ -30,7 +30,7 @@ public class ChildRunner {
         Object kevRuntime = System.getProperty("kevruntime");
         kevURLS[0] = new File(kevRuntime.toString()).toURI().toURL();
         URLClassLoader cl = new URLClassLoader(kevURLS);
-        Class miniMainClass = cl.loadClass("org.kevoree.platform.standalone.min.App");
+        Class miniMainClass = cl.loadClass("org.kevoree.platform.standalone.App");
         Method mainM = miniMainClass.getMethod("main", String[].class);
         String[] argsFork = new String[0];
         mainM.invoke(null, (Object) argsFork);

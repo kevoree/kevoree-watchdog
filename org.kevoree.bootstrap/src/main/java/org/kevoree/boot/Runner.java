@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class Runner {
 
-    private static final String runtimeURL = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone.min/kevoreeVersion/org.kevoree.platform.standalone.min-kevoreeVersion.jar";
+    private static final String runtimeURL = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone/kevoreeVersion/org.kevoree.platform.standalone-kevoreeVersion.jar";
 
     private static RuntimeDowloader downloader = new RuntimeDowloader();
 
