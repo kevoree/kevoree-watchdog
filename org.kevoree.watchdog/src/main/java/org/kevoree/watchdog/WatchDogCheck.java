@@ -77,7 +77,9 @@ public class WatchDogCheck implements Runnable {
         Properties props = System.getProperties();
         for (Object key : props.keySet()) {
            if(!key.equals("node.name") || !key.equals("node.bootstrap")){
-               childargs.add("-D"+key+"=" + System.getProperty(key.toString()));
+               if(!key.toString().startsWith("os") && !key.toString().startsWith("android") && !key.toString().startsWith("java") && !key.toString().startsWith("user") && !key.toString().startsWith("line.separator") ){
+                   childargs.add("-D"+key+"=" + System.getProperty(key.toString()));
+               }
            }
         }
 
