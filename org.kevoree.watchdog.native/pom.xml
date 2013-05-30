@@ -33,12 +33,12 @@
                                 def ear = new File("$pom.basedir/../org.kevoree.watchdog/target/org.kevoree.watchdog-${project.version}.${project.packaging}")
                                 log.info("${ear?.getAbsolutePath()}");
 
-                                def command = "/opt/robovm/bin/robovm -resources ${ear?.getAbsolutePath()} -target console -jar ${ear?.getAbsolutePath()}"
+                                def command = "/opt/robovm/bin/robovm -resources ${ear?.getAbsolutePath()} -target console -jar ${ear?.getAbsolutePath()} org.kevoree.watchdog.Runner"
                                 def proc = command.execute(null,new File("$pom.basedir/target"))
                                 proc.waitFor()
                                 println "return code: ${ proc.exitValue()}"
                                 println "stderr: ${proc.err.text}"
-                                println "stdout: ${proc.in.text}" // *out* from the external program is *in* for groovy
+                                println "stdout: ${proc.in.text}"
                             </source>
                         </configuration>
                     </execution>
