@@ -1,8 +1,9 @@
 package org.kevoree.watchdog;
 
 import org.kevoree.watchdog.child.jvm.ChildJVM;
+import org.kevoree.watchdog.child.jvm.JVMStream;
 
-import java.io.File;
+import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
@@ -33,18 +34,48 @@ public class WatchDogCheck implements Runnable {
         this.runtimeFile = runtimeFile;
     }
 
+    private File sysoutFile = null;
+    private File syserrFile = null;
+    private BufferedWriter sysoutFileWriter = null;
+    private BufferedWriter syserrFileWriter = null;
+
+    public void setSysoutFile(File sysoutFile) throws IOException {
+        this.sysoutFile = sysoutFile;
+        this.sysoutFileWriter = new BufferedWriter(new FileWriter(sysoutFile));
+        this.syserrFileWriter = this.sysoutFileWriter; //by default system.out will also be used for error
+    }
+
+    public void setSyserrFile(File syserrFile) throws IOException {
+        this.syserrFile = syserrFile;
+        this.syserrFileWriter = new BufferedWriter(new FileWriter(syserrFile));
+    }
+
     @Override
     public void run() {
         Long dif = System.currentTimeMillis() - lastCheck.get();
         if (dif > checkTime) {
             System.err.println("Kevoree Runtime does not send news since " + checkTime + " force restart");
-            currentProcess.destroy();
+            destroyChild();
             startKevoreeProcess();
         }
     }
 
     public void destroyChild() {
         currentProcess.destroy();
+        try {
+            sysoutThread.stop();
+            sysoutFileWriter.flush();
+            sysoutFileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            syserrThread.stop();
+            syserrFileWriter.flush();
+            syserrFileWriter.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -76,11 +107,11 @@ public class WatchDogCheck implements Runnable {
 
         Properties props = System.getProperties();
         for (Object key : props.keySet()) {
-           if(!key.equals("node.name") || !key.equals("node.bootstrap")){
-               if(!key.toString().startsWith("os") && !key.toString().startsWith("android") && !key.toString().startsWith("java") && !key.toString().startsWith("user") && !key.toString().startsWith("line.separator") ){
-                   childargs.add("-D"+key+"=" + System.getProperty(key.toString()));
-               }
-           }
+            if (!key.equals("node.name") || !key.equals("node.bootstrap")) {
+                if (!key.toString().startsWith("os") && !key.toString().startsWith("android") && !key.toString().startsWith("java") && !key.toString().startsWith("user") && !key.toString().startsWith("line.separator")) {
+                    childargs.add("-D" + key + "=" + System.getProperty(key.toString()));
+                }
+            }
         }
 
         currentProcess = new ChildJVM.Builder()
@@ -88,6 +119,48 @@ public class WatchDogCheck implements Runnable {
                 .withAdditionalCommandLineArguments(childargs)
                 .withMainClassArguments(childmainargs)
                 .withInheritClassPath(true).isolate();
+
+        handleStdOutAndStdErrOf(currentProcess);
+    }
+
+    private Thread sysoutThread = null;
+    private Thread syserrThread = null;
+
+    private void handleStdOutAndStdErrOf(Process process) {
+        sysoutThread = new JVMStream("stdout", process.getInputStream(), new JVMStream.LineHandler() {
+
+            public void handle(String line) {
+                if (sysoutFileWriter != null) {
+                    try {
+                        sysoutFileWriter.append(line);
+                        sysoutFileWriter.newLine();
+                        sysoutFileWriter.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.out.println(line);
+                }
+            }
+        });
+        sysoutThread.start();
+        syserrThread = new JVMStream("stderr", process.getErrorStream(), new JVMStream.LineHandler() {
+
+            public void handle(String line) {
+                if (syserrFileWriter != null) {
+                    try {
+                        syserrFileWriter.append(line);
+                        syserrFileWriter.newLine();
+                        syserrFileWriter.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    System.err.println(line);
+                }
+            }
+        });
+        syserrThread.start();
     }
 
 

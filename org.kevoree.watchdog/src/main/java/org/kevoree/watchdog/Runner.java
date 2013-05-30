@@ -11,6 +11,9 @@ public class Runner {
 
     public static final String pingPortProperty = "ping.port";
     public static final String pingTimeoutProperty = "ping.timeout";
+    public static final String outFileLogProperty = "log.out";
+    public static final String errFileLogProperty = "log.err";
+
 
     private static final String runtimeURL = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone/kevoreeVersion/org.kevoree.platform.standalone-kevoreeVersion.jar";
     private static RuntimeDowloader downloader = new RuntimeDowloader();
@@ -61,6 +64,15 @@ public class Runner {
         File runtime = downloader.get(cleanRuntimeURL, kevoreeVersion);
         checker.setRuntimeFile(runtime);
         childManager.setSubProcess(checker);
+
+        Object fileoutNameProp = System.getProperty(outFileLogProperty);
+        if (fileoutNameProp != null) {
+            checker.setSysoutFile(new File(fileoutNameProp.toString()));
+        }
+        Object fileerrNameProp = System.getProperty(outFileLogProperty);
+        if (fileerrNameProp != null) {
+            checker.setSyserrFile(new File(fileerrNameProp.toString()));
+        }
 
         //look for bootmodel
         if (args.length == 2) {

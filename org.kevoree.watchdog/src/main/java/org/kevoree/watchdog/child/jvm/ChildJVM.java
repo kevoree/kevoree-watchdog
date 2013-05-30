@@ -85,7 +85,6 @@ public class ChildJVM {
         try {
             ProcessBuilder builder = new ProcessBuilder(buildCommandLine());
             final Process process = builder.start();
-            handleStdOutAndStdErrOf(process);
             return process;
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,19 +134,4 @@ public class ChildJVM {
         return systemProperties;
     }
 
-    private void handleStdOutAndStdErrOf(Process process) {
-        new JVMStream("stdout", process.getInputStream(), new JVMStream.LineHandler() {
-
-            public void handle(String line) {
-                System.out.println(line);
-            }
-        }).start();
-
-        new JVMStream("stderr", process.getErrorStream(), new JVMStream.LineHandler() {
-
-            public void handle(String line) {
-                System.err.println(line);
-            }
-        }).start();
-    }
 }
