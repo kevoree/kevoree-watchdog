@@ -33,7 +33,7 @@
                                 def ear = new File("$pom.basedir/../org.kevoree.watchdog/target/org.kevoree.watchdog-${project.version}.${project.packaging}")
                                 log.info("${ear?.getAbsolutePath()}");
 
-                                def command = "/opt/robovm/bin/robovm -target console -jar ${ear?.getAbsolutePath()}"
+                                def command = "/opt/robovm/bin/robovm -resources ${ear?.getAbsolutePath()} -target console -jar ${ear?.getAbsolutePath()}"
                                 def proc = command.execute(null,new File("$pom.basedir/target"))
                                 proc.waitFor()
                                 println "return code: ${ proc.exitValue()}"

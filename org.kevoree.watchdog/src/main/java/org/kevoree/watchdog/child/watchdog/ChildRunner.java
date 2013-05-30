@@ -25,16 +25,24 @@ public class ChildRunner {
 
     public static void main(String[] args) throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         System.out.println("Kevoree Daemon");
-        Runner.configureSystemProps();
-        pool.scheduleAtFixedRate(client, 0, WatchDogCheck.checkTime / 2, TimeUnit.MILLISECONDS);
-        URL[] kevURLS = new URL[1];
-        Object kevRuntime = System.getProperty("kevruntime");
-        kevURLS[0] = new File(kevRuntime.toString()).toURI().toURL();
-        URLClassLoader cl = new URLClassLoader(kevURLS);
-        Class miniMainClass = cl.loadClass(kevoreeMainClass);
-        Method mainM = miniMainClass.getMethod("main", String[].class);
-        String[] argsFork = new String[0];
-        mainM.invoke(null, (Object) argsFork);
+        try {
+            Runner.configureSystemProps();
+            pool.scheduleAtFixedRate(client, 0, WatchDogCheck.checkTime / 2, TimeUnit.MILLISECONDS);
+            URL[] kevURLS = new URL[1];
+            Object kevRuntime = System.getProperty("kevruntime");
+            kevURLS[0] = new File(kevRuntime.toString()).toURI().toURL();
+            URLClassLoader cl = new URLClassLoader(kevURLS);
+            Class miniMainClass = cl.loadClass(kevoreeMainClass);
+            Method mainM = miniMainClass.getMethod("main", String[].class);
+            String[] argsFork = new String[0];
+            mainM.invoke(null, (Object) argsFork);
+        } catch (Exception e) {
+
+            System.out.println(System.getProperty("kevruntime"));
+
+            e.printStackTrace();
+            System.exit(-1);
+        }
     }
 
 }
