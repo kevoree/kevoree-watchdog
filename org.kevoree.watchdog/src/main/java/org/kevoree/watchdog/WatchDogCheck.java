@@ -6,6 +6,7 @@ import java.io.File;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +43,7 @@ public class WatchDogCheck implements Runnable {
         }
     }
 
-    public void destroyChild(){
+    public void destroyChild() {
         currentProcess.destroy();
     }
 
@@ -63,10 +64,23 @@ public class WatchDogCheck implements Runnable {
         childargs.add("-Dkevruntime=" + runtimeFile.getAbsolutePath());
         if (modelFile != null) {
             childargs.add("-Dnode.bootstrap=" + modelFile.getAbsolutePath());
+        } else {
+            Object nodeBoot = System.getProperty("node.bootstrap");
+            if (nodeBoot != null) {
+                childargs.add("-Dnode.bootstrap=" + nodeBoot.toString());
+            }
         }
-        if(System.getProperty("node.name")!=null && System.getProperty("node.name") != ""){
+        if (System.getProperty("node.name") != null && System.getProperty("node.name") != "") {
             childargs.add("-Dnode.name=" + System.getProperty("node.name"));
         }
+
+        Properties props = System.getProperties();
+        for (Object key : props.keySet()) {
+           if(!key.equals("node.name") || !key.equals("node.bootstrap")){
+               childargs.add("-D"+key+"=" + System.getProperty(key.toString()));
+           }
+        }
+
         currentProcess = new ChildJVM.Builder()
                 .withMainClassName("org.kevoree.watchdog.child.watchdog.ChildRunner")
                 .withAdditionalCommandLineArguments(childargs)
