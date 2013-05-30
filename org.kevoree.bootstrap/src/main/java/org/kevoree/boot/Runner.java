@@ -9,17 +9,38 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class Runner {
 
+    public static final String pingPortProperty = "ping.port";
+    public static final String pingTimeoutProperty = "ping.timeout";
+
     private static final String runtimeURL = "http://maven.kevoree.org/release/org/kevoree/platform/org.kevoree.platform.standalone/kevoreeVersion/org.kevoree.platform.standalone-kevoreeVersion.jar";
-
     private static RuntimeDowloader downloader = new RuntimeDowloader();
-
     private static MavenVersionResolver snapshotResolver = new MavenVersionResolver();
-
     private static ChildManager childManager = new ChildManager();
-
     private static WatchDogCheck checker = new WatchDogCheck();
 
+    public static void configureSystemProps() {
+        //Configuration of property
+        Object pingportValue = System.getProperty(pingPortProperty);
+        if (pingportValue != null) {
+            try {
+                WatchDogCheck.internalPort = Integer.parseInt(pingportValue.toString());
+            } catch (Exception e) {
+                System.err.println("Bad ping port specified : " + pingportValue + ", take default value : " + WatchDogCheck.internalPort);
+            }
+        }
+        Object pingTimeoutValue = System.getProperty(pingTimeoutProperty);
+        if (pingTimeoutValue != null) {
+            try {
+                WatchDogCheck.checkTime = Integer.parseInt(pingTimeoutValue.toString());
+            } catch (Exception e) {
+                System.err.println("Bad ping timeout specified : " + pingportValue + ", take default value : " + WatchDogCheck.checkTime);
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
+        configureSystemProps();
 
         Runtime.getRuntime().addShutdownHook(new Thread(childManager));
         System.out.println("Kevoree Boot Service");
@@ -39,6 +60,7 @@ public class Runner {
         }
         File runtime = downloader.get(cleanRuntimeURL, kevoreeVersion);
         checker.setRuntimeFile(runtime);
+        childManager.setSubProcess(checker);
 
         //look for bootmodel
         if (args.length == 2) {
@@ -48,7 +70,6 @@ public class Runner {
                 checker.setModelFile(modelFile);
             }
         }
-
         System.out.println("Kevoree " + kevoreeVersion + " Ready to run ");
         checker.startServer();
         checker.startKevoreeProcess();

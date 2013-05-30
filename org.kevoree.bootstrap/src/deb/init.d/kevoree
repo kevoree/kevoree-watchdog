@@ -35,7 +35,7 @@ javaCommandLineKeyword="kevoree.jar"                     # a keyword that occurs
 #load config file
 . /etc/$serviceNameLo/config
 
-javaArgs="-Dnode.name=$NODE_NAME -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION /etc/$serviceNameLo/model"  # arguments for Java launcher
+javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION /etc/$serviceNameLo/model"  # arguments for Java launcher
 javaCommandLine="$javaExe $javaArgs"                       # command line to start the Java service application
 
 # Makes the file $1 writable by the group $serviceGroup.

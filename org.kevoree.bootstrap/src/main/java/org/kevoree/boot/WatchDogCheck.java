@@ -3,6 +3,8 @@ package org.kevoree.boot;
 import org.kevoree.boot.child.jvm.ChildJVM;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
@@ -16,24 +18,21 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class WatchDogCheck implements Runnable {
 
-    public static final Integer internalPort = 9999;
-    public static final Integer checkTime = 3000;
-
-    public void setRuntimeFile(File runtimeFile) {
-        this.runtimeFile = runtimeFile;
-    }
-
+    public static Integer internalPort = 9999;
+    public static Integer checkTime = 3000;
     private File runtimeFile = null;
+    private File modelFile = null;
+    private AtomicLong lastCheck = new AtomicLong();
+    private static ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
+    private Process currentProcess = null;
 
     public void setModelFile(File modelFile) {
         this.modelFile = modelFile;
     }
 
-    private File modelFile = null;
-
-    private AtomicLong lastCheck = new AtomicLong();
-    private static ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
-    private Process currentProcess = null;
+    public void setRuntimeFile(File runtimeFile) {
+        this.runtimeFile = runtimeFile;
+    }
 
     @Override
     public void run() {
@@ -44,6 +43,11 @@ public class WatchDogCheck implements Runnable {
             startKevoreeProcess();
         }
     }
+
+    public void destroyChild(){
+        currentProcess.destroy();
+    }
+
 
     private static Thread serverThread = null;
 

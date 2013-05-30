@@ -1,5 +1,6 @@
 package org.kevoree.boot.child.watchdog;
 
+import org.kevoree.boot.Runner;
 import org.kevoree.boot.WatchDogCheck;
 
 import java.io.File;
@@ -20,17 +21,17 @@ public class ChildRunner {
     private static ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
     private static WatchdogClient client = new WatchdogClient();
 
+    private static final String kevoreeMainClass = "org.kevoree.platform.standalone.App";
+
     public static void main(String[] args) throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         System.out.println("Kevoree Daemon");
-
+        Runner.configureSystemProps();
         pool.scheduleAtFixedRate(client, 0, WatchDogCheck.checkTime / 2, TimeUnit.MILLISECONDS);
-
-
         URL[] kevURLS = new URL[1];
         Object kevRuntime = System.getProperty("kevruntime");
         kevURLS[0] = new File(kevRuntime.toString()).toURI().toURL();
         URLClassLoader cl = new URLClassLoader(kevURLS);
-        Class miniMainClass = cl.loadClass("org.kevoree.platform.standalone.App");
+        Class miniMainClass = cl.loadClass(kevoreeMainClass);
         Method mainM = miniMainClass.getMethod("main", String[].class);
         String[] argsFork = new String[0];
         mainM.invoke(null, (Object) argsFork);

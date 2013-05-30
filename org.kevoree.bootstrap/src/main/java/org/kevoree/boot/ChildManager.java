@@ -1,26 +1,23 @@
 package org.kevoree.boot;
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * Created by duke on 17/05/13.
  */
 public class ChildManager implements Runnable {
 
-    private AtomicInteger pid = new AtomicInteger();
-
-    public void setPID(Integer it){
-        pid.set(it);
+    public void setSubProcess(WatchDogCheck subProcess) {
+        this.subProcess = subProcess;
     }
+
+    private WatchDogCheck subProcess = null;
 
     @Override
     public void run() {
         try {
-            Runtime.getRuntime().exec("kill " + pid).waitFor();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            if(subProcess!=null){
+                subProcess.destroyChild();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

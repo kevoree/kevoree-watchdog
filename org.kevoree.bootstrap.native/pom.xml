@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>org.kevoree.bootstrap.native</artifactId>
+    <packaging>jar</packaging>
+    <name>kevoree.bootstrap.native</name>
+    <groupId>org.kevoree.bootstrap</groupId>
+    <version>1.0-SNAPSHOT</version>
+
+    <parent>
+        <groupId>org.kevoree.bootstrap</groupId>
+        <artifactId>org.kevoree.bootstrap.root</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>groovy-maven-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                        <configuration>
+                            <source>
+                                def ear = new File("$pom.basedir/../org.kevoree.bootstrap/target/org.kevoree.bootstrap.service-${project.version}.${project.packaging}")
+                                log.info("${ear?.getAbsolutePath()}");
+
+                                def command = "/opt/robovm/bin/robovm -target console -jar ${ear?.getAbsolutePath()}"
+                                def proc = command.execute(null,new File("$pom.basedir/target"))
+                                proc.waitFor()
+                                println "return code: ${ proc.exitValue()}"
+                                println "stderr: ${proc.err.text}"
+                                println "stdout: ${proc.in.text}" // *out* from the external program is *in* for groovy
+                            </source>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.kevoree.bootstrap</groupId>
+            <artifactId>org.kevoree.bootstrap.service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+</project>

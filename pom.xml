@@ -44,6 +44,7 @@
 
     <modules>
         <module>org.kevoree.bootstrap</module>
+        <module>org.kevoree.bootstrap.native</module>
     </modules>
 
     <build>
@@ -71,6 +72,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.scala-tools</groupId>
