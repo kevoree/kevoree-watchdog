@@ -1,30 +1,46 @@
 kevoree-watchdog
 ================
 
-Kevoree Watchdog : Software to manage permanent Kevoree Runtime
+Kevoree Watchdog : Software ensures the continuity of service of a Kevoree Runtime
 
-The Kevoree bootstrap service aims at deploying, installing, starting and monitor a kevoree runtime. This bootstrap acts as a watchdog which monitor the underlying kevoree runtime. If no message are receive during 3000 ms the kevoree child runtime is restarted.
+The Kevoree Watchdog is a service that downloads (if necessary), installs, starts and monitors a Kevoree Runtime. 
+This watchdog service monitors the Kevoree Runtime by regularly sending ping messages.
+If no answer is received within 3000 ms, the watchdog restarts the runtime.
 
-### Using the bootstraper in the console
+### Using the Watchdog in the console
+The Kevoree Watchdog service has two parameters
++ **kevoree.version** (mandatory) is the version number of the runtime you want to launch (e.g.: 2.0.0, 1.9.0-SNAPSHOT).
++ **bootmodel** is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
 
-		wget https://oss.sonatype.org/content/repositories/snapshots/org/kevoree/bootstrap/org.kevoree.bootstrap.service/1.0-SNAPSHOT/org.kevoree.bootstrap.service-1.0-20130517.235756-4.deb
-		
-		java -jar org.kevoree.bootstrap.service-1.0-20130517.232717-2.jar <kevoree.version> <bootmodel>
+```bash
+wget https://oss.sonatype.org/content/repositories/snapshots/org/kevoree/bootstrap/org.kevoree.bootstrap.service/1.0-SNAPSHOT/org.kevoree.bootstrap.service-1.0-20130529.154235-17.jar
+java -jar org.kevoree.bootstrap.service-1.0-20130529.154235-17.jar <kevoree.version> <bootmodel>
+```
 
-### Install Kevoree bootstrap and startup script (Debian and Ubuntu)
+### Install Kevoree Watchdog as a Linux service (Debian and Ubuntu)
 
-Simply donwload the last .deb version of kevoree bootstraper 
+Simply download the last .deb version of Kevoree Watchdog 
 
-	wget https://oss.sonatype.org/content/repositories/snapshots/org/kevoree/bootstrap/org.kevoree.bootstrap.service/1.0-SNAPSHOT/org.kevoree.bootstrap.service-1.0-20130517.235756-4.deb
-	sudo dpkg -i sudo dpkg -i org.kevoree.bootstrap*.deb
-	
-### Configuration is located in /etc/kevoree/config file
+```bash
+wget https://oss.sonatype.org/content/repositories/snapshots/org/kevoree/bootstrap/org.kevoree.bootstrap.service/1.0-SNAPSHOT/org.kevoree.bootstrap.service-1.0-20130529.154235-17.deb
+sudo dpkg -i org.kevoree.bootstrap*.deb
+```
+
+The service is automatically registered to start as a service when the system starts.
+
+### Configuring the Linux service in /etc/kevoree/config
 
 Default content : 
 
 	KEVOREE_VERSION=2.0.0-SNAPSHOT
+	NODE_NAME=$(hostname)_$(id -un)
+	PING_PORT=9999
+	PING_TIMEOUT=3000
 	
-Change the KEVOREE_VERSION to the right version 
++ **KEVOREE_VERSION** Sets the version of the runtime to be managed (downloaded, started, monitored).
++ **NODE_NAME** Name of the Kevoree node. Initialy set to the host name plus user name.
++ **PING_PORT** Is the tcp port used ping the runtime. Set it to a free port.
++ **PING_TIMEOUT** Sets the max no-response time before rebooting the managed runtime.
 
 ### Start Kevoree service 
 
@@ -44,6 +60,6 @@ Change the KEVOREE_VERSION to the right version
 
 ### Uninstall Kevoree bootstrap (Debian and Ubuntu)
 
-To remove the kevoree runtime and the startup script you should use the dpkg command using the kevoree package name kevoree.bootstrap , simply as follow :
+To remove the kevoree runtime and the startup script you should use the dpkg command using the kevoree package name kevoree.bootstrap, simply as follow :
 
 	sudo dpkg -r kevoree.bootstrap 
