@@ -1,10 +1,8 @@
-package org.kevoree.boot;
+package org.kevoree.watchdog;
 
-import org.kevoree.boot.child.jvm.ChildJVM;
+import org.kevoree.watchdog.child.jvm.ChildJVM;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
@@ -70,7 +68,7 @@ public class WatchDogCheck implements Runnable {
             childargs.add("-Dnode.name=" + System.getProperty("node.name"));
         }
         currentProcess = new ChildJVM.Builder()
-                .withMainClassName("org.kevoree.boot.child.watchdog.ChildRunner")
+                .withMainClassName("org.kevoree.watchdog.child.watchdog.ChildRunner")
                 .withAdditionalCommandLineArguments(childargs)
                 .withMainClassArguments(childmainargs)
                 .withInheritClassPath(true).isolate();

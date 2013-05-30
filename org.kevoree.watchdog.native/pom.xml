@@ -6,8 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.kevoree.bootstrap.native</artifactId>
     <packaging>jar</packaging>
-    <name>kevoree.bootstrap.native</name>
-    <groupId>org.kevoree.bootstrap</groupId>
+    <name>Kevoree :: Watchdog :: Native</name>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
@@ -31,7 +30,7 @@
                         </goals>
                         <configuration>
                             <source>
-                                def ear = new File("$pom.basedir/../org.kevoree.bootstrap/target/org.kevoree.bootstrap.service-${project.version}.${project.packaging}")
+                                def ear = new File("$pom.basedir/../org.kevoree.watchdog/target/org.kevoree.watchdog-${project.version}.${project.packaging}")
                                 log.info("${ear?.getAbsolutePath()}");
 
                                 def command = "/opt/robovm/bin/robovm -target console -jar ${ear?.getAbsolutePath()}"
@@ -50,8 +49,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.kevoree.bootstrap</groupId>
-            <artifactId>org.kevoree.bootstrap.service</artifactId>
+            <groupId>org.kevoree.watchdog</groupId>
+            <artifactId>org.kevoree.watchdog</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

@@ -1,4 +1,4 @@
-package org.kevoree.boot;
+package org.kevoree.watchdog;
 
 /**
  * Created by duke on 17/05/13.

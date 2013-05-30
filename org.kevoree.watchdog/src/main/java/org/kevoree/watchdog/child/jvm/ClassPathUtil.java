@@ -1,5 +1,5 @@
 
-package org.kevoree.boot.child.jvm;
+package org.kevoree.watchdog.child.jvm;
 
 import java.util.Properties;
 

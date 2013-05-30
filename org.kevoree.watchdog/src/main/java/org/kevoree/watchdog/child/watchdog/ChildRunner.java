@@ -1,7 +1,7 @@
-package org.kevoree.boot.child.watchdog;
+package org.kevoree.watchdog.child.watchdog;
 
-import org.kevoree.boot.Runner;
-import org.kevoree.boot.WatchDogCheck;
+import org.kevoree.watchdog.Runner;
+import org.kevoree.watchdog.WatchDogCheck;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

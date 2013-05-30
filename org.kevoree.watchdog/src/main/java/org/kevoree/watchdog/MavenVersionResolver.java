@@ -1,4 +1,4 @@
-package org.kevoree.boot;
+package org.kevoree.watchdog;
 
 
 import java.io.BufferedReader;

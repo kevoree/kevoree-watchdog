@@ -1,9 +1,7 @@
-package org.kevoree.boot.child.watchdog;
+package org.kevoree.watchdog.child.watchdog;
 
-import org.kevoree.boot.WatchDogCheck;
+import org.kevoree.watchdog.WatchDogCheck;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;

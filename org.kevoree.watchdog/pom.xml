@@ -4,15 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.kevoree.bootstrap.service</artifactId>
+    <artifactId>org.kevoree.watchdog</artifactId>
     <packaging>jar</packaging>
-    <name>kevoree.bootstrap</name>
-    <groupId>org.kevoree.bootstrap</groupId>
+    <name>Kevoree :: Watchdog</name>
     <version>1.0-SNAPSHOT</version>
 
     <parent>
-        <groupId>org.kevoree.bootstrap</groupId>
-        <artifactId>org.kevoree.bootstrap.root</artifactId>
+        <groupId>org.kevoree.watchdog</groupId>
+        <artifactId>org.kevoree.watchdog.root</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -33,7 +32,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.kevoree.boot.Runner</mainClass>
+                                    <mainClass>org.kevoree.watchdog.Runner</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -109,14 +108,11 @@
                                         <group>loader</group>
                                     </mapper>
                                 </data>
-
                             </dataSet>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
     </build>
 
