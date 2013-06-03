@@ -69,7 +69,7 @@ public class Runner {
         if (fileoutNameProp != null) {
             checker.setSysoutFile(new File(fileoutNameProp.toString()));
         }
-        Object fileerrNameProp = System.getProperty(outFileLogProperty);
+        Object fileerrNameProp = System.getProperty(errFileLogProperty);
         if (fileerrNameProp != null) {
             checker.setSyserrFile(new File(fileerrNameProp.toString()));
         }

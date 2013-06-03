@@ -30,6 +30,8 @@
  */
 package org.kevoree.watchdog.child.jvm;
 
+import org.kevoree.watchdog.Version;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -99,11 +101,11 @@ public class ChildJVM {
         if (additionalCommandLineArguments != null) {
             commandLine.addAll(additionalCommandLineArguments);
         }
-        if(System.getProperty("java.vm.vendor").toLowerCase().contains("robovm")){
-            File localJar = new File("org.kevoree.watchdog-1.0-SNAPSHOT.jar");
-            if(localJar.exists()){
+        if (System.getProperty("java.vm.vendor").toLowerCase().contains("robovm")) {
+            File localJar = new File(Version.NAME + "-" + Version.VERSION + ".jar");
+            if (localJar.exists()) {
                 commandLine.add("-cp");
-                commandLine.add(getClasspath()+File.pathSeparator+localJar.getAbsolutePath());
+                commandLine.add(getClasspath() + File.pathSeparator + localJar.getAbsolutePath());
             }
         } else {
             if (inheritClasspath) {
