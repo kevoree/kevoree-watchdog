@@ -5,12 +5,12 @@
     <artifactId>org.kevoree.watchdog</artifactId>
     <packaging>jar</packaging>
     <name>Kevoree :: Watchdog</name>
-    <version>0.7</version>
+    <version>0.8-SNAPSHOT</version>
 
     <parent>
         <groupId>org.kevoree.watchdog</groupId>
         <artifactId>org.kevoree.watchdog.root</artifactId>
-        <version>0.7</version>
+        <version>0.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 

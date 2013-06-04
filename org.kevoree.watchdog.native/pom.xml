@@ -5,12 +5,12 @@
     <artifactId>org.kevoree.watchdog.native</artifactId>
     <packaging>jar</packaging>
     <name>Kevoree :: Watchdog :: Native</name>
-    <version>0.7</version>
+    <version>0.8-SNAPSHOT</version>
 
     <parent>
         <groupId>org.kevoree.watchdog</groupId>
         <artifactId>org.kevoree.watchdog.root</artifactId>
-        <version>0.7</version>
+        <version>0.8-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.kevoree.watchdog</groupId>
             <artifactId>org.kevoree.watchdog</artifactId>
-            <version>0.7</version>
+            <version>0.8-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
