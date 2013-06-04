@@ -3,7 +3,10 @@ package org.kevoree.watchdog;
 import org.kevoree.watchdog.child.jvm.ChildJVM;
 import org.kevoree.watchdog.child.jvm.JVMStream;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
@@ -64,15 +67,27 @@ public class WatchDogCheck implements Runnable {
         currentProcess.destroy();
         try {
             sysoutThread.stop();
-            sysoutFileWriter.flush();
-            sysoutFileWriter.close();
+            try {
+                sysoutFileWriter.flush();
+            } catch (Exception e) {
+            }
+            try {
+                sysoutFileWriter.close();
+            } catch (Exception e) {
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
             syserrThread.stop();
-            syserrFileWriter.flush();
-            syserrFileWriter.close();
+            try {
+                syserrFileWriter.flush();
+            } catch (Exception e) {
+            }
+            try {
+                syserrFileWriter.close();
+            } catch (Exception e) {
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
