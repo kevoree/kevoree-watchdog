@@ -16,7 +16,7 @@ The Kevoree Watchdog service has two parameters
 wget https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar
 java -jar org.kevoree.watchdog-0.8.jar <kevoree.version> <bootmodel>
 ```
-[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.7/org.kevoree.watchdog-0.7.jar) 
+[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar) 
 ### Install Kevoree Watchdog as a Linux service (Debian and Ubuntu)
 
 Simply download the last .deb version of Kevoree Watchdog 
