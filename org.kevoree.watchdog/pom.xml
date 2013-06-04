@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>org.kevoree.watchdog</artifactId>
     <packaging>jar</packaging>
     <name>Kevoree :: Watchdog</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.7</version>
 
     <parent>
         <groupId>org.kevoree.watchdog</groupId>
         <artifactId>org.kevoree.watchdog.root</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>0.7</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -30,22 +28,16 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <tasks>
-                                <property name="src.dir" value="${project.build.sourceDirectory}"/>
-                                <property name="package.dir" value="org/kevoree/watchdog"/>
-                                <property name="package.name" value="org.kevoree.watchdog"/>
-                                <echo file="${src.dir}/${package.dir}/Version.java"
-                                      message="package ${package.name};${line.separator}"/>
-                                <echo file="${src.dir}/${package.dir}/Version.java" append="true"
-                                      message="public final class Version {${line.separator}"/>
-                                <echo file="${src.dir}/${package.dir}/Version.java" append="true"
-                                      message=" public static String VERSION=&quot;${project.version}&quot;;${line.separator}"/>
-                                <echo file="${src.dir}/${package.dir}/Version.java" append="true"
-                                      message=" public static String GROUP=&quot;${project.groupId}&quot;;${line.separator}"/>
-                                <echo file="${src.dir}/${package.dir}/Version.java" append="true"
-                                      message=" public static String NAME=&quot;${project.artifactId}&quot;;${line.separator}"/>
-                                <echo file="${src.dir}/${package.dir}/Version.java" append="true"
-                                      message="}${line.separator}"/>
-                                <echo message="BUILD ${buildtime}"/>
+                                <property name="src.dir" value="${project.build.sourceDirectory}" />
+                                <property name="package.dir" value="org/kevoree/watchdog" />
+                                <property name="package.name" value="org.kevoree.watchdog" />
+                                <echo file="${src.dir}/${package.dir}/Version.java" message="package ${package.name};${line.separator}" />
+                                <echo file="${src.dir}/${package.dir}/Version.java" append="true" message="public final class Version {${line.separator}" />
+                                <echo file="${src.dir}/${package.dir}/Version.java" append="true" message=" public static String VERSION=&quot;${project.version}&quot;;${line.separator}" />
+                                <echo file="${src.dir}/${package.dir}/Version.java" append="true" message=" public static String GROUP=&quot;${project.groupId}&quot;;${line.separator}" />
+                                <echo file="${src.dir}/${package.dir}/Version.java" append="true" message=" public static String NAME=&quot;${project.artifactId}&quot;;${line.separator}" />
+                                <echo file="${src.dir}/${package.dir}/Version.java" append="true" message="}${line.separator}" />
+                                <echo message="BUILD ${buildtime}" />
                             </tasks>
                         </configuration>
                     </execution>
@@ -65,8 +57,7 @@
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>org.kevoree.watchdog.Runner</mainClass>
                                 </transformer>
                             </transformers>
