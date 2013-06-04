@@ -17,6 +17,23 @@ wget https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog
 java -jar org.kevoree.watchdog-0.8.jar <kevoree.version> <bootmodel>
 ```
 [Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar) 
+
+##### Additional system properties
+Kevoree watchdog also support dedicated system properties to configure standard output and error stream. The following option which must appears **BEFORE** the -jar option, and allows to redirect standard and error stream to a file
+
+	-Dlog.out=path_to_file
+	
+In addition the following option, aims at redirect the error stream to a file.
+
+	-Dlog.err=path_to_file
+	
+If this option is not explicitly declared, but the log.out is declared, by default Kevoree Watchdig redirect **BOTH** error and standard output to the same file declared with log.out option.
+
+Finelly, the full watchdig startup can be done throught:
+
+	java -Dlog.out=path_to_file -jar org.kevoree.watchdog-0.8.jar <kevoree.version> <bootmodel>
+
+
 ### Install Kevoree Watchdog as a Linux service (Debian and Ubuntu)
 
 Simply download the last .deb version of Kevoree Watchdog 
