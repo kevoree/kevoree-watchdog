@@ -10,7 +10,7 @@ If no answer is received within 3000 ms, the watchdog restarts the runtime.
 ### Using the Watchdog in the console
 The Kevoree Watchdog service has two parameters
 + **kevoree.version** (mandatory) is the version number of the runtime you want to launch (e.g.: 2.0.0, 1.9.0-SNAPSHOT).
-+ **bootmodel** is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
++ **bootmodel** (optional) is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
 
 ```bash
 wget https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar
