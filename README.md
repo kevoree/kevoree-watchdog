@@ -13,19 +13,19 @@ The Kevoree Watchdog service has two parameters
 + **bootmodel** is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
 
 ```bash
-wget https://oss.sonatype.org/content/repositories/snapshots/org/kevoree/bootstrap/org.kevoree.bootstrap.service/1.0-SNAPSHOT/org.kevoree.bootstrap.service-1.0-20130529.154235-17.jar
+wget https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.7/org.kevoree.watchdog-0.7.jar
 java -jar org.kevoree.bootstrap.service-1.0-20130529.154235-17.jar <kevoree.version> <bootmodel>
 ```
-
+[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.7/org.kevoree.watchdog-0.7.jar) 
 ### Install Kevoree Watchdog as a Linux service (Debian and Ubuntu)
 
 Simply download the last .deb version of Kevoree Watchdog 
 
 ```bash
-wget https://oss.sonatype.org/content/repositories/snapshots/org/kevoree/bootstrap/org.kevoree.bootstrap.service/1.0-SNAPSHOT/org.kevoree.bootstrap.service-1.0-20130529.154235-17.deb
+wget https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.7/org.kevoree.watchdog-0.7.deb
 sudo dpkg -i org.kevoree.bootstrap*.deb
 ```
-
+[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.7/org.kevoree.watchdog-0.7.deb) 
 The service is automatically registered to start as a service when the system starts.
 
 ### Configuring the Linux service in /etc/kevoree/config
