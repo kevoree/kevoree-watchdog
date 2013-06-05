@@ -4,5 +4,8 @@ useradd -g kevoree -d /usr/share/kevoree kevoree
 if [ -d "/usr/share/kevoree" ]
 then mkdir /usr/share/kevoree
 fi
+touch /var/run/kevoree.pid
 
 sudo chgrp kevoree /usr/share/kevoree kevoree
+sudo chgrp kevoree /var/run/kevoree.pid
+
