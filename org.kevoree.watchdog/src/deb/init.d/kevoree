@@ -1,27 +1,19 @@
+### BEGIN INIT INFO
+# Provides:          kevoree
+# Required-Start:    $remote_fs $syslog $named $network $time
+# Required-Stop:     $remote_fs $syslog $named $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Kevoree watchdog daemon
+# Description:       Daemon of Kevoree runtume.
+### END INIT INFO
+
 #!/bin/bash
-#
-# chkconfig: 345 99 05
-# description: Java deamon script
-#
-# A non-SUSE Linux start/stop script for Java daemons.
-#
-# Derived from -
-# Home page: http://www.source-code.biz
-# License:   GNU/LGPL (http://www.gnu.org/licenses/lgpl.html)
-# Copyright 2006 Christian d'Heureuse, Inventec Informatik AG, Switzerland.
-#
-# History:
-# 2013-05-17 Fouquet Francois: remove JAVA_HOME variable, add param file
-# 2010-09-21 Josh Davis: Changed 'sudo' to 'su', fix some typos, removed unused variables
-# 2009-03-04 Josh Davis: Ubuntu/Redhat version.
-# 2006-06-27 Christian d'Heureuse: Script created.
-# 2006-07-02 chdh: Minor improvements.
-# 2006-07-10 chdh: Changes for SUSE 10.0.
 
 serviceNameLo="kevoree"                                  # service name with the first letter in lowercase
 serviceName="Kevoree"                                    # service name
 serviceUser="kevoree"                                      # OS user name for the service
-serviceGroup="root"                                    # OS group name for the service
+serviceGroup="kevoree"                                    # OS group name for the service
 applDir="/usr/share/kevoree/"                          # home directory of the service application
 serviceUserHome="/$serviceUser"                       # home directory of the service user
 serviceLogFile="/var/log/$serviceNameLo/kevoree.log"               # We send everything to syslog so that it can be accessed from the Amazon HUD

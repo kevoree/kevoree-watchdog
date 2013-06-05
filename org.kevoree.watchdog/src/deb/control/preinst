@@ -1,23 +1,21 @@
 #!/bin/sh
 
-if grep -qx $GROUPE /etc/group
-then
-    groupadd kevoree
+if [ -z "$(getent group kevoree)" ];
+then groupadd kevoree
 fi
 
-
-if id -u kevoree >/dev/null 2>&1;
-then
+if [ -z "$(getent passwd kevoree)" ];
+then echo 'kevoree user already exists'
 else useradd -g kevoree -d /usr/share/kevoree kevoree
 fi
 
-if [ -d "/usr/share/kevoree" ]
-then
+if [ -d "/usr/share/kevoree" ];
+then echo '/usr/share/kevoree verified'
 else mkdir /usr/share/kevoree
 fi
+
 touch /var/run/kevoree.pid
 
-sudo chgrp kevoree /usr/share/kevoree kevoree
-sudo chgrp kevoree /var/run/kevoree.pid
+chgrp kevoree /usr/share/kevoree
+chgrp kevoree /var/run/kevoree.pid
 
-sudo update-rc.d kevoree defaults
