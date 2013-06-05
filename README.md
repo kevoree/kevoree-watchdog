@@ -65,7 +65,7 @@ Default content :
 	
 ### Monitor the log file 
 
-	tail -f -n 200 /var/log/kevoree/out
+	tail -f -n 200 /var/log/kevoree/kevoree.log
 
 ### Get status (PID) of current Kevoree Runtime
 
