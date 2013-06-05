@@ -105,8 +105,8 @@
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/etc/init.d</prefix>
-                                        <user>loader</user>
-                                        <group>loader</group>
+                                        <user>kevoree</user>
+                                        <group>kevoree</group>
                                     </mapper>
                                 </data>
                                 <data>
@@ -115,8 +115,8 @@
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/etc/kevoree</prefix>
-                                        <user>loader</user>
-                                        <group>loader</group>
+                                        <user>kevoree</user>
+                                        <group>kevoree</group>
                                     </mapper>
                                 </data>
 
@@ -130,8 +130,8 @@
                                     </paths>
                                     <mapper>
                                         <type>perm</type>
-                                        <user>loader</user>
-                                        <group>loader</group>
+                                        <user>kevoree</user>
+                                        <group>kevoree</group>
                                     </mapper>
                                 </data>
                             </dataSet>

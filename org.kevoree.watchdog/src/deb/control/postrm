@@ -1,2 +1,13 @@
 #!/bin/sh
 sudo update-rc.d remove kevoree
+
+
+if grep -q $GROUPE /etc/group
+then
+    groupdel kevoree
+fi
+
+if id -u kevoree >/dev/null 2>&1;
+then userdel kevoree
+fi
+

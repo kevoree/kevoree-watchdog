@@ -1,8 +1,19 @@
 #!/bin/sh
-useradd -g kevoree -d /usr/share/kevoree kevoree
+
+if grep -qx $GROUPE /etc/group
+then
+    groupadd kevoree
+fi
+
+
+if id -u kevoree >/dev/null 2>&1;
+then
+else useradd -g kevoree -d /usr/share/kevoree kevoree
+fi
 
 if [ -d "/usr/share/kevoree" ]
-then mkdir /usr/share/kevoree
+then
+else mkdir /usr/share/kevoree
 fi
 touch /var/run/kevoree.pid
 
