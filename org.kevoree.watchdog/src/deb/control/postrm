@@ -1,1 +1,2 @@
 #!/bin/sh
+sudo update-rc.d remove kevoree
