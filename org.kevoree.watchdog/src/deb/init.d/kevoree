@@ -18,7 +18,6 @@
 # 2006-07-02 chdh: Minor improvements.
 # 2006-07-10 chdh: Changes for SUSE 10.0.
 
-#JAVA_HOME=/usr/java/latest
 serviceNameLo="kevoree"                                  # service name with the first letter in lowercase
 serviceName="Kevoree"                                    # service name
 serviceUser="root"                                      # OS user name for the service
@@ -28,7 +27,12 @@ serviceUserHome="/$serviceUser"                       # home directory of the se
 serviceLogFile="/var/log/$serviceNameLo/out"               # We send everything to syslog so that it can be accessed from the Amazon HUD
 maxShutdownTime=15                                         # maximum number of seconds to wait for the daemon to terminate normally
 pidFile="/var/run/$serviceNameLo.pid"                      # name of PID file (PID = process ID number)
-javaCommand="java"                                         # name of the Java launcher without the path
+
+if [ -f ${JAVA_HOME} ]
+then javaCommand="java"
+else javaCommand="$JAVA_HOME/bin/java"
+fi
+                                       # name of the Java launcher without the path
 javaExe="$javaCommand"                      # file name of the Java application launcher executable
 javaCommandLineKeyword="kevoree.jar"                     # a keyword that occurs on the commandline, used to detect an already running service process and to distinguish it from others
 

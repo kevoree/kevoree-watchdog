@@ -1,2 +1,8 @@
 #!/bin/sh
+useradd -g kevoree -d /usr/share/kevoree kevoree
 
+if [ -d "/usr/share/kevoree" ]
+then mkdir /usr/share/kevoree
+fi
+
+sudo chgrp kevoree /usr/share/kevoree kevoree
