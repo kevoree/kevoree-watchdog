@@ -79,4 +79,4 @@ Default content :
 
 To remove the kevoree runtime and the startup script you should use the dpkg command using the kevoree package name kevoree.bootstrap, simply as follow :
 
-	sudo dpkg -r kevoree.bootstrap 
+	sudo dpkg -r kevoree.watchdog 
