@@ -59,6 +59,13 @@ Default content :
 + **PING_PORT** Is the tcp port used ping the runtime. Set it to a free port.
 + **PING_TIMEOUT** Sets the max no-response time before rebooting the managed runtime.
 
+##### Bootstrap model 
+by default the service lookup for a bootstrap model (XMI or KevScript) in the following file 
+
+	/etc/kevoree/bootmodel
+	
+If this model is empty, the runtime create one (as in standalone mode). In short place your bootstrap model and the informations relative to your node name at this place.
+
 ### Start Kevoree service 
 
 	sudo service kevoree start
