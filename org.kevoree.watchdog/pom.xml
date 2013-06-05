@@ -87,8 +87,8 @@
                                     <mapper>
                                         <type>perm</type>
                                         <prefix>/usr/share/kevoree/lib</prefix>
-                                        <user>loader</user>
-                                        <group>loader</group>
+                                        <user>kevoree</user>
+                                        <group>kevoree</group>
                                     </mapper>
                                 </data>
 
