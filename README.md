@@ -13,7 +13,7 @@ The Kevoree Watchdog service has two parameters
 + **bootmodel** (optional) is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
 
 ```bash
-wget https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar
+wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar
 java -jar org.kevoree.watchdog-0.8.jar <kevoree.version> <bootmodel>
 ```
 [Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar) 
@@ -39,7 +39,7 @@ Finelly, the full watchdig startup can be done throught:
 Simply download the last .deb version of Kevoree Watchdog 
 
 ```bash
-wget https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.deb
+wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.deb
 sudo dpkg -i org.kevoree.bootstrap*.deb
 ```
 [Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.deb) 
