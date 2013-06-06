@@ -40,7 +40,7 @@ Simply download the last .deb version of Kevoree Watchdog
 
 ```bash
 wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.deb
-sudo dpkg -i org.kevoree.bootstrap*.deb
+sudo dpkg -i org.kevoree.watchdog*.deb
 ```
 [Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.deb) 
 The service is automatically registered to start as a service when the system starts.
