@@ -16,6 +16,6 @@ fi
 
 touch /var/run/kevoree.pid
 
-chgrp kevoree /usr/share/kevoree
-chgrp kevoree /var/run/kevoree.pid
+chown kevoree:kevoree /usr/share/kevoree
+chown kevoree:kevoree /var/run/kevoree.pid
 

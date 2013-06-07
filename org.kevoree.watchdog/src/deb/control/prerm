@@ -1,1 +1,5 @@
 #!/bin/sh
+echo "Stopping kevoree service"
+service kevoree stop
+echo "Removing kevoree service"
+update-rc.d -f kevoree remove

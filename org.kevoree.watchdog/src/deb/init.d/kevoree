@@ -33,8 +33,8 @@ javaCommandLineKeyword="kevoree.jar"                     # a keyword that occurs
 #load config file
 . /etc/$serviceNameLo/config
 
-javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION /etc/$serviceNameLo/bootmodel"  # arguments for Java launcher
-javaCommandLine="cd /usr/share/kevoree ; $javaExe $javaArgs"                       # command line to start the Java service application
+javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -Dlog.out=$applDir/$NODE_NAME.log -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION /etc/$serviceNameLo/bootmodel"  # arguments for Java launcher
+javaCommandLine="$javaExe $javaArgs"                       # command line to start the Java service application
 
 # Makes the file $1 writable by the group $serviceGroup.
 function makeFileWritable () {
@@ -72,7 +72,7 @@ function startServiceProcess () {
    rm -f $pidFile
    makeFileWritable $pidFile || return 1
    makeFileWritable $serviceLogFile || return 1
-   cmd="nohup $javaCommandLine >>$serviceLogFile 2>&1 & echo \$! >$pidFile"
+   cmd="nohup $javaCommandLine > kevoree.watchdog.out & echo \$! >$pidFile"
    su -m $serviceUser -s $SHELL -c "$cmd" || return 1
    sleep 0.1
    pid="$(<$pidFile)"

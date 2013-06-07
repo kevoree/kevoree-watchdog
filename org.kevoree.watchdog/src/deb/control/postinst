@@ -1,3 +1,6 @@
 #!/bin/sh
 chmod +x /etc/init.d/kevoree
-sudo update-rc.d kevoree defaults
+echo "Registering kevoree service"
+update-rc.d kevoree defaults
+echo "Starting kevoree service"
+service kevoree start
