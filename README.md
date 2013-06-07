@@ -13,10 +13,10 @@ The Kevoree Watchdog service has two parameters
 + **bootmodel** (optional) is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
 
 ```bash
-wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar
-java -jar org.kevoree.watchdog-0.8.jar <kevoree.version> <bootmodel>
+wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.9/org.kevoree.watchdog-0.9.jar
+java -jar org.kevoree.watchdog-0.9.jar <kevoree.version> <bootmodel>
 ```
-[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.jar) 
+[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.9/org.kevoree.watchdog-0.9.jar) 
 
 ##### Additional system properties
 Kevoree watchdog also support dedicated system properties to configure standard output and error stream. The following option which must appears **BEFORE** the -jar option, and allows to redirect standard and error stream to a file
@@ -31,7 +31,7 @@ If this option is not explicitly declared, but the log.out is declared, by defau
 
 Finelly, the full watchdig startup can be done throught:
 
-	java -Dlog.out=path_to_file -jar org.kevoree.watchdog-0.8.jar <kevoree.version> <bootmodel>
+	java -Dlog.out=path_to_file -jar org.kevoree.watchdog-0.9.jar <kevoree.version> <bootmodel>
 
 
 ### Install Kevoree Watchdog as a Linux service (Debian and Ubuntu)
@@ -39,10 +39,10 @@ Finelly, the full watchdig startup can be done throught:
 Simply download the last .deb version of Kevoree Watchdog 
 
 ```bash
-wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.deb
+wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.9/org.kevoree.watchdog-0.9.deb
 sudo dpkg -i org.kevoree.watchdog*.deb
 ```
-[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.8/org.kevoree.watchdog-0.8.deb) 
+[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.9/org.kevoree.watchdog-0.9.deb) 
 The service is automatically registered to start as a service when the system starts.
 
 ### Configuring the Linux service in /etc/kevoree/config
