@@ -129,7 +129,7 @@ function stopService () {
 function checkServiceStatus () {
 #   echo -n "Checking for $serviceName:   "
    if getServicePID; then
-    echo "$pid"
+    echo "kevoree running pid=$pid"
     RETVAL=0
    else
     echo "stopped"
