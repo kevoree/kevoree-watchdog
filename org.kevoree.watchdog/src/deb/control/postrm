@@ -1,11 +1,10 @@
 #!/bin/sh
-sudo update-rc.d remove kevoree
-
-if [ -n "$(getent group kevoree)" ];
-    then groupdel kevoree
-fi
+sudo update-rc.d kevoree remove
 
 if [ -n "$(getent passwd kevoree)" ];
     then userdel kevoree;
 fi
 
+if [ -n "$(getent group kevoree)" ];
+    then groupdel kevoree
+fi

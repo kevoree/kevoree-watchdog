@@ -5,8 +5,8 @@ then groupadd kevoree
 fi
 
 if [ -z "$(getent passwd kevoree)" ];
-then echo 'kevoree user already exists'
-else useradd -g kevoree -d /usr/share/kevoree kevoree
+then useradd -g kevoree -d /usr/share/kevoree kevoree
+else echo 'kevoree user already exists'
 fi
 
 if [ -d "/usr/share/kevoree" ];
