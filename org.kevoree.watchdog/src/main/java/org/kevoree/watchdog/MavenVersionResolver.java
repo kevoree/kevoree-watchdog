@@ -12,7 +12,7 @@ import java.net.URL;
  */
 public class MavenVersionResolver {
 
-    public String getLastVersion(String runtimeSnapshotURL) throws IOException {
+    public String getLastVersion(String runtimeSnapshotURL, boolean latest, boolean release) throws IOException {
 
         String metaData = runtimeSnapshotURL.substring(0,runtimeSnapshotURL.lastIndexOf("/"));
         metaData = metaData + "/maven-metadata.xml";
@@ -25,6 +25,17 @@ public class MavenVersionResolver {
             result+=line;
         }
 
+        if(latest){
+            if(result.contains("<latest>") && result.contains("</latest>")){
+                return result.substring(result.indexOf("<latest>")+"<latest>".length(),result.indexOf("</latest>"));
+            }
+        }
+        if(release){
+            if(result.contains("<release>") && result.contains("</release>")){
+                return result.substring(result.indexOf("<release>")+"<release>".length(),result.indexOf("</release>"));
+            }
+        }
+
         String buildNumber = "";
         if(result.contains("<buildNumber>") && result.contains("</buildNumber>")){
             buildNumber = result.substring(result.indexOf("<buildNumber>")+"<buildNumber>".length(),result.indexOf("</buildNumber>"));
@@ -35,5 +46,6 @@ public class MavenVersionResolver {
             return null;
         }
     }
+
 
 }
