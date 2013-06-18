@@ -116,14 +116,14 @@ public class WatchDogCheck implements Runnable {
                 childargs.add("-Dnode.bootstrap=" + nodeBoot.toString());
             }
         }
-        if (System.getProperty("node.name") != null && System.getProperty("node.name") != "") {
+        if (System.getProperty("node.name") != null && !System.getProperty("node.name").equals("")) {
             childargs.add("-Dnode.name=" + System.getProperty("node.name"));
         }
 
         Properties props = System.getProperties();
         for (Object key : props.keySet()) {
             if (!key.equals("node.name") || !key.equals("node.bootstrap")) {
-                if (!key.toString().startsWith("os") && !key.toString().startsWith("android") && !key.toString().startsWith("java") && !key.toString().startsWith("user") && !key.toString().startsWith("line.separator")) {
+                if (!key.toString().startsWith("os") && !key.toString().startsWith("android") && !key.toString().startsWith("java") && !key.toString().startsWith("user") && !key.toString().startsWith("line.separator") && !key.toString().startsWith("sun") && !key.toString().startsWith("path.separator") && !key.toString().startsWith("file.encoding") && !key.toString().startsWith("file.separator") && !System.getProperty(key.toString()).equals("")) {
                     childargs.add("-D" + key + "=" + System.getProperty(key.toString()));
                 }
             }
