@@ -2,5 +2,3 @@
 chmod +x /etc/init.d/kevoree
 echo "Registering kevoree service"
 update-rc.d kevoree defaults
-echo "Starting kevoree service"
-service kevoree start
