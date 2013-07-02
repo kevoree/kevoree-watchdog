@@ -50,6 +50,8 @@ public class RuntimeDowloader {
     public File getCache(String runtimeURL, String version) {
         String tempPath = getTempPath();
         File runtimeFile = new File(tempPath + File.separator + "kevoree-runtime-" + version + ".jar");
+        System.out.println(runtimeFile);
+
         return runtimeFile;
     }
 
