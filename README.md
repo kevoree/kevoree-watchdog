@@ -13,10 +13,10 @@ The Kevoree Watchdog service has two parameters
 + **bootmodel** (optional) is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
 
 ```bash
-wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.12/org.kevoree.watchdog-0.12.jar
-java -jar org.kevoree.watchdog-0.12.jar <kevoree.version> <bootmodel>
+wget http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE
+java -jar org.kevoree.watchdog-0.<version>.jar <kevoree.version> <bootmodel>
 ```
-[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.12/org.kevoree.watchdog-0.12.jar)
+[Download the Watchdog directly](http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE)
 
 ##### Additional system properties
 Kevoree watchdog also support dedicated system properties to configure standard output and error stream. The following option which must appears **BEFORE** the -jar option, and allows to redirect standard and error stream to a file
@@ -39,10 +39,10 @@ Finelly, the full watchdig startup can be done throught:
 Simply download the last .deb version of Kevoree Watchdog 
 
 ```bash
-wget http://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.9/org.kevoree.watchdog-0.9.deb
+wget http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE&p=deb
 sudo dpkg -i org.kevoree.watchdog*.deb
 ```
-[Download the Watchdog directly](https://oss.sonatype.org/content/repositories/releases/org/kevoree/watchdog/org.kevoree.watchdog/0.9/org.kevoree.watchdog-0.9.deb) 
+[Download the Watchdog directly](http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE&p=deb) 
 The service is automatically registered to start as a service when the system starts.
 
 ### Configuring the Linux service in /etc/kevoree/config
