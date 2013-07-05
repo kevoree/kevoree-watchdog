@@ -15,7 +15,7 @@ public class Runner {
     public static final String errFileLogProperty = "log.err";
 
     private static final String runtimeBaseURL = "http://oss.sonatype.org/content/groups/public/org/kevoree/platform/org.kevoree.platform.standalone/";
-    private static final String runtimeURL = runtimeBaseURL+"kevoreeVersion/org.kevoree.platform.standalone-kevoreeVersion.jar";
+    private static final String runtimeURL = runtimeBaseURL + "kevoreeVersion/org.kevoree.platform.standalone-kevoreeVersion.jar";
     private static RuntimeDowloader downloader = new RuntimeDowloader();
     private static MavenVersionResolver snapshotResolver = new MavenVersionResolver();
     private static ChildManager childManager = new ChildManager();
@@ -58,22 +58,22 @@ public class Runner {
         //String kevoreeVersion = "RELEASE";
 
 
-        if(args.length > 0){
+        if (args.length > 0) {
             kevoreeVersion = args[0].toString();
         }
 
-        if(kevoreeVersion.equals("LATEST")){
-            kevoreeVersion = snapshotResolver.getLastVersion(runtimeBaseURL,true,false);
-            System.out.println("LATEST -> "+kevoreeVersion);
-            if(kevoreeVersion == null){
+        if (kevoreeVersion.equals("LATEST")) {
+            kevoreeVersion = snapshotResolver.getLastVersion(runtimeBaseURL, true, false);
+            System.out.println("LATEST -> " + kevoreeVersion);
+            if (kevoreeVersion == null) {
                 System.exit(-1);
             }
         }
-        if(kevoreeVersion.equals("RELEASE")){
+        if (kevoreeVersion.equals("RELEASE")) {
             String cleanRuntimeURL = runtimeBaseURL.replaceAll("kevoreeVersion", kevoreeVersion);
-            kevoreeVersion = snapshotResolver.getLastVersion(cleanRuntimeURL,false,true);
-            System.out.println("RELEASE -> "+kevoreeVersion);
-            if(kevoreeVersion == null){
+            kevoreeVersion = snapshotResolver.getLastVersion(cleanRuntimeURL, false, true);
+            System.out.println("RELEASE -> " + kevoreeVersion);
+            if (kevoreeVersion == null) {
                 System.exit(-1);
             }
         }
@@ -81,10 +81,9 @@ public class Runner {
         String kevoreeVersionBackup = kevoreeVersion;
 
 
-
         String cleanRuntimeURL = runtimeURL.replaceAll("kevoreeVersion", kevoreeVersion);
         if (kevoreeVersion.endsWith("SNAPSHOT")) {
-            kevoreeVersion = kevoreeVersion.replace("SNAPSHOT", snapshotResolver.getLastVersion(cleanRuntimeURL,false,false));
+            kevoreeVersion = kevoreeVersion.replace("SNAPSHOT", snapshotResolver.getLastVersion(cleanRuntimeURL, false, false));
             //CLEANUP URL WITH MAVEN RESOLVED VERSION
             cleanRuntimeURL = runtimeURL.replaceFirst("kevoreeVersion", kevoreeVersionBackup);
             cleanRuntimeURL = cleanRuntimeURL.replaceAll("kevoreeVersion", kevoreeVersion);
@@ -95,11 +94,21 @@ public class Runner {
 
         Object fileoutNameProp = System.getProperty(outFileLogProperty);
         if (fileoutNameProp != null) {
-            checker.setSysoutFile(new File(fileoutNameProp.toString()));
+            File syso = new File(fileoutNameProp.toString());
+            if (syso.exists()) {
+                syso.renameTo(new File(System.currentTimeMillis() + fileoutNameProp.toString()));
+                syso = new File(fileoutNameProp.toString());
+            }
+            checker.setSysoutFile(syso);
         }
         Object fileerrNameProp = System.getProperty(errFileLogProperty);
         if (fileerrNameProp != null) {
-            checker.setSyserrFile(new File(fileerrNameProp.toString()));
+            File syserr = new File(fileerrNameProp.toString());
+            if (syserr.exists()) {
+                syserr.renameTo(new File(System.currentTimeMillis() + fileerrNameProp.toString()));
+                syserr = new File(fileerrNameProp.toString());
+            }
+            checker.setSyserrFile(syserr);
         }
 
         //look for bootmodel
