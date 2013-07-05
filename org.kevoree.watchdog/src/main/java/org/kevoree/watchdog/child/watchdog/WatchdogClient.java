@@ -23,7 +23,11 @@ public class WatchdogClient implements Runnable {
             e.printStackTrace();
         } finally {
             if (clientSocket != null) {
-                clientSocket.close();
+                try {
+                    clientSocket.close();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
     }

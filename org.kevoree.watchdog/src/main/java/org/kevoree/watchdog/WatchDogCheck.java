@@ -194,7 +194,13 @@ public class WatchDogCheck implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                serverSocket.close();
+                if(serverSocket != null){
+                    try {
+                        serverSocket.close();
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
             }
 
         }
