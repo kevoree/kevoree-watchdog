@@ -10,12 +10,13 @@
 # Description:       Daemon of Kevoree runtume.
 ### END INIT INFO
 
-
+#load config file
+. /etc/$serviceNameLo/config
 
 serviceNameLo="kevoree"                                  # service name with the first letter in lowercase
 serviceName="Kevoree"                                    # service name
-serviceUser="kevoree"                                      # OS user name for the service
-serviceGroup="kevoree"                                    # OS group name for the service
+serviceUser="$KEVOREE_USER"                                      # OS user name for the service
+serviceGroup="$KEVOREE_GROUP"                                    # OS group name for the service
 applDir="/usr/share/kevoree/"                          # home directory of the service application
 serviceUserHome="/$serviceUser"                       # home directory of the service user
 serviceLogFile="/var/log/$serviceNameLo/kevoree.log"               # We send everything to syslog so that it can be accessed from the Amazon HUD
@@ -30,8 +31,7 @@ fi
 javaExe="$javaCommand"                      # file name of the Java application launcher executable
 javaCommandLineKeyword="kevoree.jar"                     # a keyword that occurs on the commandline, used to detect an already running service process and to distinguish it from others
 
-#load config file
-. /etc/$serviceNameLo/config
+
 
 javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -Dlog.out=$applDir/$NODE_NAME.log -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION /etc/$serviceNameLo/bootmodel"  # arguments for Java launcher
 javaCommandLine="$javaExe $javaArgs"                       # command line to start the Java service application
