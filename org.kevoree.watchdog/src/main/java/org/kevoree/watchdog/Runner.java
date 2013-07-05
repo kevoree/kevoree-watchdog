@@ -96,7 +96,7 @@ public class Runner {
         if (fileoutNameProp != null) {
             File syso = new File(fileoutNameProp.toString());
             if (syso.exists()) {
-                syso.renameTo(new File(System.currentTimeMillis() + fileoutNameProp.toString()));
+                syso.renameTo(new File(fileoutNameProp.toString()+"-"+System.currentTimeMillis()));
                 syso = new File(fileoutNameProp.toString());
             }
             checker.setSysoutFile(syso);
@@ -105,7 +105,7 @@ public class Runner {
         if (fileerrNameProp != null) {
             File syserr = new File(fileerrNameProp.toString());
             if (syserr.exists()) {
-                syserr.renameTo(new File(System.currentTimeMillis() + fileerrNameProp.toString()));
+                syserr.renameTo(new File(fileerrNameProp.toString()+"-"+System.currentTimeMillis()));
                 syserr = new File(fileerrNameProp.toString());
             }
             checker.setSyserrFile(syserr);
