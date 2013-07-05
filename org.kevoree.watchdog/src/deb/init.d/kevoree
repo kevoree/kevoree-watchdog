@@ -15,8 +15,8 @@
 
 serviceNameLo="kevoree"                                  # service name with the first letter in lowercase
 serviceName="Kevoree"                                    # service name
-serviceUser="$KEVOREE_USER"                                      # OS user name for the service
-serviceGroup="$KEVOREE_GROUP"                                    # OS group name for the service
+serviceUser=$KEVOREE_USER                                      # OS user name for the service
+serviceGroup=$KEVOREE_GROUP                                    # OS group name for the service
 applDir="/usr/share/kevoree/"                          # home directory of the service application
 serviceUserHome="/$serviceUser"                       # home directory of the service user
 serviceLogFile="/var/log/$serviceNameLo/kevoree.log"               # We send everything to syslog so that it can be accessed from the Amazon HUD
