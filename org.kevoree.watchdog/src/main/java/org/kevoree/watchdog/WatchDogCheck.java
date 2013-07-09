@@ -28,6 +28,7 @@ public class WatchDogCheck implements Runnable {
     private AtomicLong lastCheck = new AtomicLong();
     private static ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
     private Process currentProcess = null;
+    public static JVMStream.LineHandler lineHandler = null;
 
     public void setModelFile(File modelFile) {
         this.modelFile = modelFile;
@@ -154,7 +155,11 @@ public class WatchDogCheck implements Runnable {
                         e.printStackTrace();
                     }
                 } else {
-                    System.out.println(line);
+                    if (lineHandler != null) {
+                        lineHandler.handle(line);
+                    } else {
+                        System.out.println(line);
+                    }
                 }
             }
         });
@@ -171,7 +176,11 @@ public class WatchDogCheck implements Runnable {
                         e.printStackTrace();
                     }
                 } else {
-                    System.err.println(line);
+                    if (lineHandler != null) {
+                        lineHandler.handle(line);
+                    } else {
+                        System.err.println(line);
+                    }
                 }
             }
         });

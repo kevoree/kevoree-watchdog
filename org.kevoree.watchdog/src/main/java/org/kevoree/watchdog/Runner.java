@@ -19,7 +19,7 @@ public class Runner {
     private static RuntimeDowloader downloader = new RuntimeDowloader();
     private static MavenVersionResolver snapshotResolver = new MavenVersionResolver();
     private static ChildManager childManager = new ChildManager();
-    private static WatchDogCheck checker = new WatchDogCheck();
+    public static WatchDogCheck checker = new WatchDogCheck();
 
     public static void configureSystemProps() {
         //Configuration of property
