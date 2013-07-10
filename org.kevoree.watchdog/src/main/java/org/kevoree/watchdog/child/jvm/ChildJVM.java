@@ -30,6 +30,7 @@
  */
 package org.kevoree.watchdog.child.jvm;
 
+import org.kevoree.watchdog.RuntimeDowloader;
 import org.kevoree.watchdog.Version;
 
 import java.io.File;
@@ -108,10 +109,15 @@ public class ChildJVM {
                 commandLine.add(getClasspath() + File.pathSeparator + localJar.getAbsolutePath());
             }
         } else {
+            RuntimeDowloader dwl = new RuntimeDowloader();
+            commandLine.add("-cp");
+            commandLine.add(dwl.getSharedChildClassJar().getAbsolutePath());
+
+            /*
             if (inheritClasspath) {
                 commandLine.add("-cp");
                 commandLine.add(getClasspath());
-            }
+            } */
         }
         if (inheritedSystemPropertyNames != null && !inheritedSystemPropertyNames.isEmpty()) {
             commandLine.addAll(getInheritedSystemProperties());

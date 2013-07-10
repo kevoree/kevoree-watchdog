@@ -1,8 +1,5 @@
 package org.kevoree.watchdog.child.watchdog;
 
-import org.kevoree.watchdog.Runner;
-import org.kevoree.watchdog.WatchDogCheck;
-
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,15 +16,16 @@ import java.util.concurrent.TimeUnit;
 public class ChildRunner {
 
     private static ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
-    private static WatchdogClient client = new WatchdogClient();
+    private static WatchdogClient client = null;//new WatchdogClient();
 
     private static final String kevoreeMainClass = "org.kevoree.platform.standalone.App";
 
     public static void main(String[] args) throws MalformedURLException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         System.out.println("Kevoree Daemon");
         try {
-            Runner.configureSystemProps();
-            pool.scheduleAtFixedRate(client, 0, WatchDogCheck.checkTime / 2, TimeUnit.MILLISECONDS);
+            configureSystemProps();
+            client = new WatchdogClient(internalPort);
+            pool.scheduleAtFixedRate(client, 0, checkTime / 2, TimeUnit.MILLISECONDS);
             URL[] kevURLS = new URL[1];
             Object kevRuntime = System.getProperty("kevruntime");
             kevURLS[0] = new File(kevRuntime.toString()).toURI().toURL();
@@ -42,6 +40,31 @@ public class ChildRunner {
 
             e.printStackTrace();
             System.exit(-1);
+        }
+    }
+
+    public static final String pingPortProperty = "ping.port";
+    public static final String pingTimeoutProperty = "ping.timeout";
+    public static Integer internalPort = 9999;
+    public static Integer checkTime = 3000;
+
+    public static void configureSystemProps() {
+        //Configuration of property
+        Object pingportValue = System.getProperty(pingPortProperty);
+        if (pingportValue != null) {
+            try {
+                internalPort = Integer.parseInt(pingportValue.toString());
+            } catch (Exception e) {
+                System.err.println("Bad ping port specified : " + pingportValue + ", take default value : " + internalPort);
+            }
+        }
+        Object pingTimeoutValue = System.getProperty(pingTimeoutProperty);
+        if (pingTimeoutValue != null) {
+            try {
+                checkTime = Integer.parseInt(pingTimeoutValue.toString());
+            } catch (Exception e) {
+                System.err.println("Bad ping timeout specified : " + pingportValue + ", take default value : " + checkTime);
+            }
         }
     }
 
