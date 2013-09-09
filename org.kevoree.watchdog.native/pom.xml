@@ -5,17 +5,18 @@
     <artifactId>org.kevoree.watchdog.native</artifactId>
     <packaging>jar</packaging>
     <name>Kevoree :: Watchdog :: Native</name>
-    <version>0.9-SNAPSHOT</version>
+    <version>0.16-SNAPSHOT</version>
 
     <parent>
         <groupId>org.kevoree.watchdog</groupId>
         <artifactId>org.kevoree.watchdog.root</artifactId>
-        <version>0.9-SNAPSHOT</version>
+        <version>0.16-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>groovy-maven-plugin</artifactId>
@@ -30,18 +31,35 @@
                             <source>
                                 def ear = new File("$pom.basedir/../org.kevoree.watchdog/target/org.kevoree.watchdog-${project.version}.${project.packaging}")
                                 log.info("${ear?.getAbsolutePath()}");
+                                org.robovm.compiler.AppCompiler compiler = new org.robovm.compiler.AppCompiler();
+                                params = "-resources ${ear?.getAbsolutePath()} -target console -jar ${ear?.getAbsolutePath()} org.kevoree.watchdog.Runner".split();
+                                compiler.main(params);
 
-                                def command = "/opt/robovm/bin/robovm -resources ${ear?.getAbsolutePath()} -target console -jar ${ear?.getAbsolutePath()} org.kevoree.watchdog.Runner"
-                                def proc = command.execute(null,new File("$pom.basedir/target"))
-                                proc.waitFor()
-                                println "return code: ${ proc.exitValue()}"
-                                println "stderr: ${proc.err.text}"
-                                println "stdout: ${proc.in.text}"
+
+                                //def command = "/opt/robovm/bin/robovm -resources ${ear?.getAbsolutePath()} -target console -jar ${ear?.getAbsolutePath()} org.kevoree.watchdog.Runner"
+                                //def proc = command.execute(null,new File("$pom.basedir/target"))
+                                //proc.waitFor()
+                                //println "return code: ${ proc.exitValue()}"
+                                //println "stderr: ${proc.err.text}"
+                                //println "stdout: ${proc.in.text}"
                             </source>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <!--
+            <plugin>
+                <groupId>org.robovm</groupId>
+                <artifactId>robovm-maven-plugin</artifactId>
+                <version>0.0.3.1</version>
+                <configuration>
+                    <mainClass>org.kevoree.watchdog.Runner</mainClass>
+                    <os>ios</os>
+                    <arch>x86</arch>
+                </configuration>
+            </plugin>
+              -->
         </plugins>
     </build>
 
@@ -49,7 +67,12 @@
         <dependency>
             <groupId>org.kevoree.watchdog</groupId>
             <artifactId>org.kevoree.watchdog</artifactId>
-            <version>0.9-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.robovm</groupId>
+            <artifactId>robovm-maven-plugin</artifactId>
+            <version>0.0.3.1</version>
         </dependency>
     </dependencies>
 
