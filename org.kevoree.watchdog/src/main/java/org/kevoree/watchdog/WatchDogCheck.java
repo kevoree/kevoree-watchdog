@@ -70,11 +70,11 @@ public class WatchDogCheck implements Runnable {
         if (currentProcess != null) {
             currentProcess.destroy();
         }
-        if (serverThread != null) {
-            serverThread.serverSocket.close();
-            while (!serverThread.shutdown) {
+        if (watchdogServer != null) {
+            watchdogServer.serverSocket.close();
+            while (!watchdogServer.shutdown || !watchDogServerThread.isAlive()) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(50);//minimal time
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -109,13 +109,14 @@ public class WatchDogCheck implements Runnable {
     }
 
 
-    private static WatchDogServer serverThread = null;
+    private static WatchDogServer watchdogServer = null;
+    private static Thread watchDogServerThread = null;
 
     public void startServer() {
-        serverThread = new WatchDogServer();
-        Thread t = new Thread();
-        t.setDaemon(true);
-        t.start();
+        watchdogServer = new WatchDogServer();
+        watchDogServerThread = new Thread();
+        watchDogServerThread.setDaemon(true);
+        watchDogServerThread.start();
         lastCheck.set(System.currentTimeMillis());
         pool.scheduleAtFixedRate(this, WatchDogCheck.checkTime, WatchDogCheck.checkTime, TimeUnit.MILLISECONDS);
     }
