@@ -9,8 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.Executors;
@@ -67,18 +65,8 @@ public class WatchDogCheck implements Runnable {
     }
 
     public void destroyChild() {
-        if (currentProcess != null) {
+        if(currentProcess!= null){
             currentProcess.destroy();
-        }
-        if (watchdogServer != null) {
-            watchdogServer.serverSocket.close();
-            while (!watchdogServer.shutdown || !watchDogServerThread.isAlive()) {
-                try {
-                    Thread.sleep(50);//minimal time
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         try {
             sysoutThread.stop();
@@ -109,14 +97,12 @@ public class WatchDogCheck implements Runnable {
     }
 
 
-    private static WatchDogServer watchdogServer = null;
-    private static Thread watchDogServerThread = null;
+    private static Thread serverThread = null;
 
     public void startServer() {
-        watchdogServer = new WatchDogServer();
-        watchDogServerThread = new Thread();
-        watchDogServerThread.setDaemon(true);
-        watchDogServerThread.start();
+        serverThread = new Thread(new WatchDogServer());
+        serverThread.setDaemon(true);
+        serverThread.start();
         lastCheck.set(System.currentTimeMillis());
         pool.scheduleAtFixedRate(this, WatchDogCheck.checkTime, WatchDogCheck.checkTime, TimeUnit.MILLISECONDS);
     }
@@ -215,15 +201,11 @@ public class WatchDogCheck implements Runnable {
 
 
     private class WatchDogServer implements Runnable {
-        DatagramSocket serverSocket;
-        boolean shutdown = false;
         @Override
         public void run() {
+            DatagramSocket serverSocket = null;
             try {
-                serverSocket = new DatagramSocket(null);
-                serverSocket.setReuseAddress(true);
-                SocketAddress address = new InetSocketAddress(internalPort);
-                serverSocket.bind(address);
+                serverSocket = new DatagramSocket(internalPort);
                 byte[] receiveData = new byte[1024];
                 while (true) {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
@@ -241,7 +223,7 @@ public class WatchDogCheck implements Runnable {
                     }
                 }
             }
-            shutdown = true;
+
         }
     }
 
