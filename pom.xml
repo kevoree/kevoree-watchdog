@@ -44,7 +44,8 @@
 
     <modules>
         <module>org.kevoree.watchdog</module>
-      <!--  <module>org.kevoree.watchdog.native</module>    -->
+        <module>org.kevoree.watchdog.mavenrunner</module>
+        <!--  <module>org.kevoree.watchdog.native</module>    -->
     </modules>
 
     <build>
