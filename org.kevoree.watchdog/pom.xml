@@ -14,6 +14,14 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.kevoree</groupId>
+            <artifactId>org.kevoree.maven.resolver</artifactId>
+            <version>3-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
