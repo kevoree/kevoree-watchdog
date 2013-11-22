@@ -1,5 +1,6 @@
 package org.kevoree.watchdog;
 
+import org.kevoree.log.Log;
 import org.kevoree.watchdog.child.jvm.ChildJVM;
 import org.kevoree.watchdog.child.jvm.JVMStream;
 
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -123,9 +126,17 @@ public class WatchDogCheck implements Runnable {
             childargs.add("-Dnode.name=" + System.getProperty("node.name"));
         }
 
+        if (System.getProperty("kevoree.jvmArgs") != null && !System.getProperty("kevoree.jvmArgs").equals("")) {
+            String args[] = System.getProperty("kevoree.jvmArgs").substring(1,System.getProperty("kevoree.jvmArgs").length()-1).split(" ");
+            Collections.addAll(childargs, args);
+        }
+
+
         Properties props = System.getProperties();
         for (Object key : props.keySet()) {
-            if (!key.equals("node.name") || !key.equals("node.bootstrap")) {
+
+
+            if (!key.equals("node.name") || !key.equals("node.bootstrap") || !key.toString().equals("kevoree.jvmArgs")) {
                 if (!key.toString().startsWith("os")
                         && !key.toString().startsWith("android")
                         && !key.toString().startsWith("java")
@@ -139,8 +150,11 @@ public class WatchDogCheck implements Runnable {
                         && !System.getProperty(key.toString()).equals("")) {
                     childargs.add("-D" + key + "=" + System.getProperty(key.toString()));
                 }
+
             }
         }
+
+        Log.info("[Watchdog] Starting new JVM with args: " + Arrays.toString(childargs.toArray()));
 
         currentProcess = new ChildJVM.Builder()
                 .withMainClassName("org.kevoree.watchdog.child.watchdog.ChildRunner")

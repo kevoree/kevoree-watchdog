@@ -54,6 +54,20 @@ public class KevRunnerMavenMojo extends AbstractMojo {
 	 */
 	private MavenProject project;
 
+    /**
+     * @parameter default-value="-Xms256m -Xmx2048m -XX:PermSize=128m -XX:MaxPermSize=1024m"
+     */
+    private String jvmArgs;
+
+    /**
+     * @parameter default-value="9999"
+     */
+    private String pingPort;
+
+    /**
+     * @parameter default-value="3000"
+     */
+    private String pingDelay;
 
 	public void execute () throws MojoExecutionException {
 
@@ -62,6 +76,10 @@ public class KevRunnerMavenMojo extends AbstractMojo {
         args[1] = bootstrapModel.getAbsolutePath();
 
         try {
+
+            System.setProperty("kevoree.jvmArgs", "\""+jvmArgs+"\"");
+            System.setProperty("ping.port", pingPort);
+            System.setProperty("ping.timeout", pingDelay);
 
             Runner.main(args);
 
