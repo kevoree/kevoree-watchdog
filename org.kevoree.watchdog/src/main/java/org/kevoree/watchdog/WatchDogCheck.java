@@ -68,7 +68,7 @@ public class WatchDogCheck implements Runnable {
     }
 
     public void destroyChild() {
-        if(currentProcess!= null){
+        if (currentProcess != null) {
             currentProcess.destroy();
         }
         try {
@@ -229,10 +229,10 @@ public class WatchDogCheck implements Runnable {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                if(serverSocket != null){
+                if (serverSocket != null) {
                     try {
                         serverSocket.close();
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
