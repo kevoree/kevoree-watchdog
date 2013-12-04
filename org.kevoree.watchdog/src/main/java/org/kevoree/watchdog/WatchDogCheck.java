@@ -127,7 +127,7 @@ public class WatchDogCheck implements Runnable {
         }
 
         if (System.getProperty("kevoree.jvmArgs") != null && !System.getProperty("kevoree.jvmArgs").equals("")) {
-            String args[] = System.getProperty("kevoree.jvmArgs").substring(1,System.getProperty("kevoree.jvmArgs").length()-1).split(" ");
+            String args[] = System.getProperty("kevoree.jvmArgs").substring(1, System.getProperty("kevoree.jvmArgs").length() - 1).split(" ");
             Collections.addAll(childargs, args);
         }
 
