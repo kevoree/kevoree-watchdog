@@ -39,7 +39,7 @@ Finelly, the full watchdig startup can be done throught:
 Simply download the last .deb version of Kevoree Watchdog 
 
 ```bash
-wget http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE&p=deb
+wget "http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE&p=deb"  --content-disposition
 sudo dpkg -i org.kevoree.watchdog*.deb
 ```
 [Download the Watchdog directly](http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE&p=deb) 
