@@ -13,7 +13,7 @@ The Kevoree Watchdog service has two parameters
 + **bootmodel** (optional) is a Kevoree model (.kev) or a KevScript (.kevs) that will be passed on to the launched runtime at startup.
 
 ```bash
-wget http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE
+wget "http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE"  --content-disposition
 java -jar org.kevoree.watchdog-0.<version>.jar <kevoree.version> <bootmodel>
 ```
 [Download the Watchdog directly](http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.kevoree.watchdog&a=org.kevoree.watchdog&v=RELEASE)
