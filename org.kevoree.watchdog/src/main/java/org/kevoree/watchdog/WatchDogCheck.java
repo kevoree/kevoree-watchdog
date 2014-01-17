@@ -10,8 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -103,8 +101,6 @@ public class WatchDogCheck implements Runnable {
 
 
     private static Thread serverThread = null;
-    private static DatagramSocket serverSocket = null;
-    private static boolean shutdown = false;
 
     public void startServer() {
         serverThread = new Thread(new WatchDogServer());
@@ -112,20 +108,6 @@ public class WatchDogCheck implements Runnable {
         serverThread.start();
         lastCheck.set(System.currentTimeMillis());
         pool.scheduleAtFixedRate(this, WatchDogCheck.checkTime, WatchDogCheck.checkTime, TimeUnit.MILLISECONDS);
-    }
-
-    public void stopServer() {
-
-        if (serverSocket != null) {
-            serverSocket.close();
-            while (!shutdown) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public void startKevoreeProcess() {
@@ -233,31 +215,27 @@ public class WatchDogCheck implements Runnable {
 
 
     private class WatchDogServer implements Runnable {
-//        DatagramSocket serverSocket;
-//        boolean shutdown = false;
         @Override
         public void run() {
-            shutdown = false;
+            DatagramSocket serverSocket = null;
             try {
-                serverSocket = new DatagramSocket(null);
-                serverSocket.setReuseAddress(true);
-                SocketAddress address = new InetSocketAddress(internalPort);
-                serverSocket.bind(address);
+                serverSocket = new DatagramSocket(internalPort);
                 byte[] receiveData = new byte[1024];
-                while (!shutdown) {
+                while (true) {
                     DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
                     serverSocket.receive(receivePacket);
                     lastCheck.set(System.currentTimeMillis());
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
                 if (serverSocket != null) {
                     try {
                         serverSocket.close();
-                    } catch (Exception ignored){
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
-                shutdown = true;
             }
 
         }

@@ -18,7 +18,6 @@ serviceNameLo="kevoree"                                  # service name with the
 serviceName="Kevoree"                                    # service name
 serviceUser="$KEVOREE_USER"                                      # OS user name for the service
 serviceGroup="$KEVOREE_GROUP"                                    # OS group name for the service
-serviceBootModel="$BOOTMODEL"
 applDir="/usr/share/kevoree/"                          # home directory of the service application
 serviceUserHome="/$serviceUser"                       # home directory of the service user
 serviceLogFile="/var/log/$serviceNameLo/kevoree.log"               # We send everything to syslog so that it can be accessed from the Amazon HUD
@@ -34,7 +33,7 @@ javaExe="$javaCommand"                      # file name of the Java application 
 javaCommandLineKeyword="kevoree.jar"                     # a keyword that occurs on the commandline, used to detect an already running service process and to distinguish it from others
 
 
-javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -Dlog.out=$applDir/$NODE_NAME.log -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION $serviceBootModel"  # arguments for Java launcher
+javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -Dlog.out=$applDir/$NODE_NAME.log -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION /etc/$serviceNameLo/bootmodel"  # arguments for Java launcher
 javaCommandLine="$javaExe $javaArgs"                       # command line to start the Java service application
 
 # Makes the file $1 writable by the group $serviceGroup.
