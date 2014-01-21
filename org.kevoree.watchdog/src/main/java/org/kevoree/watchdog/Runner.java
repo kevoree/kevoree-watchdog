@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by duke on 16/05/13.
@@ -70,7 +72,7 @@ public class Runner {
 
 
         String runtimeMvnUrl = baseRuntimeMvnUrl + kevoreeVersion;
-        ArrayList<String> repos = new ArrayList<String>();
+        Set<String> repos = new HashSet<String>();
         repos.add(mavenCentral);
         repos.add(ossRepository);
         Log.info("Resolving runtime Jar file ...");
