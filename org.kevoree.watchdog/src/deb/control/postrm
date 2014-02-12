@@ -1,14 +1,1 @@
 #!/bin/sh
-
-if [ -n "$(getent passwd kevoree)" ];
-    then userdel kevoree;
-fi
-
-if [ -n "$(getent group kevoree)" ];
-    then groupdel kevoree
-fi
-
-echo "Removing /var/log/kevoree"
-rm -rf /var/log/kevoree
-echo "Removing /usr/share/kevoree"
-rm -rf /usr/share/kevoree
