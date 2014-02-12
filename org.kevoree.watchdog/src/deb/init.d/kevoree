@@ -19,9 +19,11 @@ serviceName="Kevoree"                                    # service name
 serviceUser="$KEVOREE_USER"                                      # OS user name for the service
 serviceGroup="$KEVOREE_GROUP"                                    # OS group name for the service
 serviceBootModel="$BOOTMODEL"
-applDir="/usr/share/kevoree/"                          # home directory of the service application
+appDir="/usr/share/kevoree/"                          # home directory of the service application
 serviceUserHome="/$serviceUser"                       # home directory of the service user
-serviceLogFile="/var/log/$serviceNameLo/kevoree.log"               # We send everything to syslog so that it can be accessed from the Amazon HUD
+serviceLogFolder="$appDir"                             # the folder where the log will be stored
+serviceLogFile="$serviceLogFolder/kevoree.watchdog.out" # the log file for the service (do not include kevoree log but just the watchdog
+serviceLogInternalFile="$serviceLogFolder/$NODE_NAME.log" # the log file of the kevoree platform which is running inside the service
 maxShutdownTime=15                                         # maximum number of seconds to wait for the daemon to terminate normally
 pidFile="/var/run/$serviceNameLo.pid"                      # name of PID file (PID = process ID number)
 
@@ -37,16 +39,16 @@ if [ "$serviceBootModel" == "" ] ; then
     serviceBootModel="/etc/$serviceNameLo/boot.kevs"
 fi
 
-javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -Dlog.out=$applDir/$NODE_NAME.log -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION $serviceBootModel"  # arguments for Java launcher
+javaArgs="-Dnode.name=$NODE_NAME -Dping.port=$PING_PORT -Dping.timeout=$PING_TIMEOUT -Dlog.out=$serviceLogInternalFile -jar /usr/share/java/kevoree.jar $KEVOREE_VERSION $serviceBootModel"  # arguments for Java launcher
 javaCommandLine="$javaExe $javaArgs"                       # command line to start the Java service application
 
 # Makes the file $1 writable by the group $serviceGroup.
 function makeFileWritable () {
    local filename="$1"
-   touch $filename || return 1
+   touch "$filename" || return 1
    echo "chgrp $serviceGroup $filename"
-   chgrp $serviceGroup $filename || return 1
-   chmod g+w $filename || return 1
+   chgrp "$serviceGroup" "$filename" || return 1
+   chmod g+w "$filename" || return 1
    return 0; }
 
 # Returns 0 if the process with PID $1 is running.
@@ -73,11 +75,10 @@ function getServicePID () {
    return 0; }
 
 function startServiceProcess () {
-   cd $applDir || return 1
+   cd $appDir || return 1
    rm -f $pidFile
    makeFileWritable $pidFile || return 1
-   makeFileWritable $serviceLogFile || return 1
-   cmd="nohup $javaCommandLine > kevoree.watchdog.out & echo \$! >$pidFile"
+   cmd="nohup $javaCommandLine > $serviceLogFile & echo \$! >$pidFile"
    su -m $serviceUser -s $SHELL -c "$cmd" || return 1
    sleep 0.1
    pid="$(<$pidFile)"
