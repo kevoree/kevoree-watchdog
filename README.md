@@ -49,11 +49,15 @@ The service is automatically registered to start as a service when the system st
 
 Default content : 
 
-	KEVOREE_VERSION=2.0.0-SNAPSHOT
-	NODE_NAME=$(hostname)_$(id -un)
+	KEVOREE_USER=kevoree
+	KEVOREE_GROUP=kevoree
+	KEVOREE_VERSION=RELEASE
+	NODE_NAME=$(hostname)
 	PING_PORT=9999
 	PING_TIMEOUT=3000
-	
+
++ **KEVOREE_USER** The user which is used to start the kevoree watchdog
++ **KEVOREE_GROUP** The group which is used to start the kevoree watchdog
 + **KEVOREE_VERSION** Sets the version of the runtime to be managed (downloaded, started, monitored).
 + **NODE_NAME** Name of the Kevoree node. Initialy set to the host name plus user name.
 + **PING_PORT** Is the tcp port used ping the runtime. Set it to a free port.
@@ -62,9 +66,13 @@ Default content :
 ##### Bootstrap model 
 by default the service lookup for a bootstrap model (XMI or KevScript) in the following file 
 
-	/etc/kevoree/bootmodel
+	/etc/kevoree/boot.kevs
 	
 If this model is empty, the runtime create one (as in standalone mode). In short place your bootstrap model and the informations relative to your node name at this place.
+
+You are also able to specify the bootstrap model on the configuration file. To do so add the following line and adapt it according to your needs:
+	
+	BOOTMODEL=/etc/kevoree/boot.kevs
 
 ### Start Kevoree service 
 
