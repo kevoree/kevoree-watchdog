@@ -3,12 +3,12 @@
   <parent>
     <artifactId>org.kevoree.watchdog.root</artifactId>
     <groupId>org.kevoree.watchdog</groupId>
-    <version>0.21-SNAPSHOT</version>
+    <version>0.21</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>org.kevoree.watchdog</artifactId>
   <name>kevoree.watchdog</name>
-  <version>0.21-SNAPSHOT</version>
+  <version>0.21</version>
   <build>
     <plugins>
       <plugin>
