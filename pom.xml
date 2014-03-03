@@ -5,7 +5,7 @@
     <packaging>pom</packaging>
     <version>0.21-SNAPSHOT</version>
     <name>Kevoree :: Watchdog :: Root</name>
-    <url>https://github.com/dukeboard/kevoree-watchdog</url>
+    <url>https://github.com/kevoree/kevoree-watchdog</url>
     <description>Kevoree Watchdog Service</description>
 
     <properties>
@@ -22,9 +22,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:dukeboard/kevoree-watchdog.git</connection>
-        <developerConnection>scm:git:git@github.com:dukeboard/kevoree-watchdog.git</developerConnection>
-        <url>http://github.com/dukeboard/kevoree-watchdog.git</url>
+        <connection>scm:git:git@github.com:kevoree/kevoree-watchdog.git</connection>
+        <developerConnection>scm:git:git@github.com:kevoree/kevoree-watchdog.git</developerConnection>
+        <url>http://github.com/kevoree/kevoree-watchdog.git</url>
     </scm>
 
     <parent>
