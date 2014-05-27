@@ -21,6 +21,7 @@ public class Runner {
     public static final String errFileLogProperty = "log.err";
 
 
+
     private static final String baseRuntimeMvnUrl = "mvn:org.kevoree.platform:org.kevoree.platform.standalone:";
     private static final String mavenCentral = "http://repo.maven.apache.org/maven2";
     private static final String ossRepository = "http://oss.sonatype.org/content/groups/public";
@@ -50,6 +51,8 @@ public class Runner {
         }
     }
 
+    private static final int nbTry = 300;
+
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         configureSystemProps();
@@ -76,7 +79,20 @@ public class Runner {
         repos.add(mavenCentral);
         repos.add(ossRepository);
         Log.info("Resolving runtime Jar file ...");
-        File runtime = artifactResolver.resolve(runtimeMvnUrl, repos);
+        File runtime = null;
+        int nbTryDone = 0;
+        while(runtime == null && nbTryDone < nbTry){
+            runtime = artifactResolver.resolve(runtimeMvnUrl, repos);
+            if(runtime == null){
+                Log.info("#"+nbTryDone);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            nbTryDone++;
+        }
         Log.info("Resolution done");
 
         if (runtime != null) {
@@ -114,7 +130,7 @@ public class Runner {
             checker.startServer();
             checker.startKevoreeProcess();
         } else {
-            System.err.println("Could not start runtime, because the file returned by the MavenResolver for " + runtimeMvnUrl + " is null");
+            System.err.println("Could not start runtime, because the file returned by the MavenResolver for " + runtimeMvnUrl + " is null after "+nbTry+" try");
         }
     }
 

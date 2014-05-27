@@ -9,7 +9,7 @@
     <description>Kevoree Watchdog Service</description>
 
     <properties>
-         <kevoree.maven.resolver.version>16</kevoree.maven.resolver.version>
+         <kevoree.maven.resolver.version>17</kevoree.maven.resolver.version>
     </properties>
 
     <licenses>
