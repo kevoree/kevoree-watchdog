@@ -3,7 +3,7 @@
     <groupId>org.kevoree.watchdog</groupId>
     <artifactId>org.kevoree.watchdog.root</artifactId>
     <packaging>pom</packaging>
-    <version>0.24-SNAPSHOT</version>
+    <version>0.24</version>
     <name>Kevoree :: Watchdog :: Root</name>
     <url>https://github.com/kevoree/kevoree-watchdog</url>
     <description>Kevoree Watchdog Service</description>
