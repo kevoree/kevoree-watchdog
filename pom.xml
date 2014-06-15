@@ -3,13 +3,13 @@
     <groupId>org.kevoree.watchdog</groupId>
     <artifactId>org.kevoree.watchdog.root</artifactId>
     <packaging>pom</packaging>
-    <version>0.25-SNAPSHOT</version>
+    <version>0.25</version>
     <name>Kevoree :: Watchdog :: Root</name>
     <url>https://github.com/kevoree/kevoree-watchdog</url>
     <description>Kevoree Watchdog Service</description>
 
     <properties>
-         <kevoree.maven.resolver.version>19</kevoree.maven.resolver.version>
+         <kevoree.maven.resolver.version>20</kevoree.maven.resolver.version>
     </properties>
 
     <licenses>
