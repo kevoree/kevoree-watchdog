@@ -4,11 +4,10 @@ import org.kevoree.log.Log;
 import org.kevoree.resolver.MavenResolver;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by duke on 16/05/13.
@@ -32,6 +31,26 @@ public class Runner {
     public static WatchDogCheck checker = new WatchDogCheck();
 
     public static void configureSystemProps() {
+
+        String propertiesFilePath = System.getProperty("watchdog.properties");
+        if(propertiesFilePath != null) {
+            File propertiesFile = new File(propertiesFilePath);
+            if(propertiesFile.exists()) {
+                try {
+                    Properties props = new Properties();
+                    props.load(new FileInputStream(propertiesFile));
+                    for (Map.Entry<Object, Object> p : props.entrySet()) {
+                        System.setProperty(p.getKey().toString(), p.getValue().toString());
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.err.println("Could not find properties file:" + propertiesFilePath);
+            }
+        }
+
+
         //Configuration of property
         Object pingportValue = System.getProperty(pingPortProperty);
         if (pingportValue != null) {
@@ -49,6 +68,7 @@ public class Runner {
                 System.err.println("Bad ping timeout specified : " + pingportValue + ", take default value : " + WatchDogCheck.checkTime);
             }
         }
+
     }
 
     private static final int nbTry = 300;
@@ -69,16 +89,19 @@ public class Runner {
         String kevoreeVersion = "latest";
         //String kevoreeVersion = "RELEASE";
 
+        String systemVersionProp = System.getProperty("kevoree.version");
+        if(systemVersionProp!= null && !systemVersionProp.equals("")) {
+            kevoreeVersion = systemVersionProp;
+        }
         if (args.length > 0) {
             kevoreeVersion = args[0];
         }
-
 
         String runtimeMvnUrl = baseRuntimeMvnUrl + kevoreeVersion;
         Set<String> repos = new HashSet<String>();
         repos.add(mavenCentral);
         repos.add(ossRepository);
-        Log.info("Resolving runtime Jar file ...");
+        Log.info("Resolving runtime Jar file: " + runtimeMvnUrl);
         File runtime = null;
         int nbTryDone = 0;
         while(runtime == null && nbTryDone < nbTry){
