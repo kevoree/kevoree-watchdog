@@ -67,9 +67,20 @@ public class WatchDogCheck implements Runnable {
         }
     }
 
+    public void halt() {
+        serverThread.interrupt();
+        destroyChild();
+    }
+
     public void destroyChild() {
+
         if (currentProcess != null) {
             currentProcess.destroy();
+            try {
+                currentProcess.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         try {
             sysoutThread.stop();

@@ -15,7 +15,7 @@ public class ChildManager implements Runnable {
     public void run() {
         try {
             if(subProcess!=null){
-                subProcess.destroyChild();
+                subProcess.halt();
             }
         } catch (Exception e) {
             e.printStackTrace();
